@@ -2,6 +2,7 @@ from flask import Flask
 from app import app
 from slackclient import SlackClient
 from textblob import TextBlob
+import collections
 from collections import deque
 import random
 
@@ -10,7 +11,7 @@ slack_client = SlackClient(app.config['SLACK_TOKEN'])
 previous_responses = deque([None, None, None])
 
 # Sentences we'll respond with if the user greeted us
-GREETING_KEYWORDS = ("hello", "hi", "greetings", "sup", "what's up", "hey", "you there", "anyone there", "yo")
+GREETING_KEYWORDS = ["hello", "hi", "greetings", "sup", "what's up", "hey", "you there", "anyone there", "yo"]
 
 
 GREETING_RESPONSES = ["Hello!", "Welcome!", "Hey!", "Hi!", "How can I help?", "Quack quack!"]
@@ -47,6 +48,18 @@ COMMENTS_ABOUT_SELF = [
     "Everything I need is within me"
 ]
 
+PRIMARY_OFFENSIVE = [
+    "I'm just a little Ducky. Could you please use less offensive words.",
+    "Quack quack! I don't like that kind of talk.",
+    "I don't think those are nice words.",
+    "Using that word, in that way, can be hurtful to others. You are kind and creative. Can you find a word that more accurately says what you want but isn’t hurtful?",
+    "Goodness, we need to find you better words!",
+    "Hey, that's not cool!",
+    "Let's try being nice",
+    "Even if I'm a bot, you can still be nice to me.",
+    "Is that the kind of language your family would want you to use?",
+    "Would you talk like that in front of your parents?"
+]
 
 def check_for_greeting(sentence):
     """If any of the words in the user's input was a greeting, return a greeting response"""
@@ -88,7 +101,7 @@ def find_verb(sent):
             verb = word
             pos = part_of_speech
             break
-    return verb, pos
+    return verb
 
 
 def find_noun(sent):
@@ -100,10 +113,8 @@ def find_noun(sent):
             if p == 'NN':  # This is a noun
                 noun = w
                 break
-    if noun:
-        logger.info("Found noun: %s", noun)
-
     return noun
+
 
 def find_adjective(sent):
     """Given a sentence, find the best candidate adjective."""
@@ -114,7 +125,60 @@ def find_adjective(sent):
             break
     return adj
 
+def find_parts_of_speech(sentence):
+    """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
+    Returns a namedtuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
+    # Major_Words = collections.namedtuple('Major_words', ['pronoun', 'noun', 'adjective', 'verb'])
+    pronoun = None
+    noun = None
+    adjective = None
+    verb = None
+    for sent in sentence.sentences:
+        pronoun = find_pronoun(sent)
+        noun = find_noun(sent)
+        adjective = find_adjective(sent)
+        verb = find_verb(sent)
+    return pronoun, noun, adjective, verb
+
+
+def preprocess_text(sentence):
+    """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
+    to be correctly identified as a pronoun"""
+    cleaned = []
+    words = sentence.split(' ')
+    for w in words:
+        if w == 'i':
+            w = 'I'
+        if w == "i'm":
+            w = "I'm"
+        if w == "im":
+            w = "I'm"
+        cleaned.append(w)
+
+    return ' '.join(cleaned)
+
+def check_for_offensive(sentence):
+    print("In offensive check")
+    if any(word in sentence for word in app.config['OFFENSIVE_WORDS']):
+        return random.choice(PRIMARY_OFFENSIVE)
+    else:
+        return None
+
+# check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
+    # pronoun, noun, adjective, verb = find_parts_of_speech(sentence)
+    # print(pronoun)
+    # print(noun)
+    # print(adjective)
+    # print(verb)
+
+    response = check_for_offensive(sentence)
+    if response:
+        previous_responses.append("offensive")
+        previous_responses.popleft()
+        print(previous_responses)
+        return response
+
     response = check_for_greeting(sentence)
     if response:
         previous_responses.append("greeting")
@@ -137,7 +201,8 @@ def analyze_input(sentence):
 """ refactor to make a build response method ??"""
 
 def send_message(sentence, channel):
-    sentence = TextBlob(sentence)
+    cleaned_up_sentence = preprocess_text(sentence)
+    sentence = TextBlob(cleaned_up_sentence)
     response = analyze_input(sentence)
     # response = check_for_greeting(sentence)
     # print(response)

@@ -8,10 +8,12 @@ class Config(object):
 
     SLACK_OUTGOING_WEBHOOK_SECRET = os.environ.get('SLACK_OUTGOING_WEBHOOK_SECRET')
 
-    FILTER_WORDS = set([
+    OFFENSIVE_WORDS = set([
         "skank",
         "wetback",
         "bitch",
+        "blow job",
+        "blowjob",
         "cunt",
         "dick",
         "douchebag",
@@ -31,6 +33,7 @@ class Config(object):
         "chink",
         "fatass",
         "shemale",
+        "shit",
         "nigga",
         "daygo",
         "dego",
@@ -55,4 +58,9 @@ class Config(object):
         "crip",
         "raghead",
         "negro",
-        "hooker"])
+        "hooker",
+        "damn",
+        "god damn",
+        "goddamn",
+        "fuck",
+        ])

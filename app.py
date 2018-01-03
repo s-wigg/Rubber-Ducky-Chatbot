@@ -1,10 +1,10 @@
 import os
 from slackclient import SlackClient
-from app.routes import inbound
+# from app.routes import inbound
 
 # SLACK_TOKEN = os.environ.get('SLACK_TOKEN', None)
 
-slack_client = SlackClient(SLACK_TOKEN)
+# slack_client = SlackClient(SLACK_TOKEN)
 # BOT_ID = os.environ.get("BOT_ID")
 
 AT_BOT = "<@" + BOT_ID + ">"

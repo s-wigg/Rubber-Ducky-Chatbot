@@ -1,25 +1,22 @@
 import os
 from flask import Flask, request, Response
 from app import app
+from app.parse import send_message
 
-# app = Flask(__name__)
-
-SLACK_OUTGOING_WEBHOOK_SECRET = os.environ.get('SLACK_OUTGOING_WEBHOOK_SECRET')
-print(SLACK_OUTGOING_WEBHOOK_SECRET)
 
 @app.route('/slack', methods=['POST'])
 def inbound():
     print("in INBOUND")
-    # print(request.form)
-    if request.form.get('token') == SLACK_OUTGOING_WEBHOOK_SECRET:
-        channel = request.form.get('channel_name')
+    if request.form.get('token') == app.config['SLACK_OUTGOING_WEBHOOK_SECRET']:
+        channel = request.form.get('channel_id')
         username = request.form.get('user_name')
         text = request.form.get('text')
         inbound_message = username + " in " + channel + " says: " + text
         print(inbound_message)
+        if username != 'ducky':
+            send_message(text, channel)
     # return Response(), 200
-    print(text)
-    return Response(text), 200
+    return Response(text, status=200)
 
 
 @app.route('/', methods=['GET'])

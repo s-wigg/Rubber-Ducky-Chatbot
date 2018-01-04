@@ -33,6 +33,30 @@ GREETING_RESPONSES = [
     "Quack quack!"
 ]
 
+END_KEYWORDS = [
+    "bye",
+    "kthxbai",
+    "BYE!",
+    "goodbye",
+    "thank",
+    "thanks",
+    "thx",
+    "good bye",
+    "ttyl"
+]
+
+END_RESPONSES = [
+    "Did Ducky help you?",
+    "Thanks for talking with me!",
+    "Bye!",
+    "Fare thee well",
+    "ttyl",
+    "See you later alligator!",
+    "Keep up the good work",
+    "Catch you later!",
+    "This was fun",
+    "Bye friend!"
+]
 
 UNCLEAR_RESPONSES = [
     "Quack quack?",
@@ -107,6 +131,14 @@ def check_for_greeting(sentence):
             return random.choice(GREETING_RESPONSES)
         else:
             return None
+
+def check_for_end_convo(sentence):
+    for word in sentence.words:
+        if word.lower() in END_KEYWORDS:
+            return random.choice(END_RESPONSES)
+        else:
+            return None
+
 
 def sentiment_analysis(sentence):
     print(sentence.sentiment)
@@ -234,6 +266,13 @@ def analyze_input(sentence):
     response = check_for_greeting(sentence)
     if response:
         previous_responses.append("greeting")
+        previous_responses.popleft()
+        print(previous_responses)
+        return response
+
+    response = check_for_end_convo(sentence)
+    if response:
+        previous_responses.append("convo end")
         previous_responses.popleft()
         print(previous_responses)
         return response

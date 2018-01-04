@@ -64,3 +64,21 @@ class Config(object):
         "goddamn",
         "fuck",
         ])
+
+    DANGER_WORDS = set([
+        "suicidal",
+        "suicide",
+        "abortion",
+        "pregnant",
+        "miscarry",
+        "miscarriage",
+        "abuse",
+        "abusive",
+        "self-harm",
+        "anorexia",
+        "bulemia"
+        "mental illness",
+        "assault",
+        "rape",
+        "sexual assault"
+        ])

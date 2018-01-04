@@ -38,6 +38,8 @@ ENCOURAGEMENT = [
     "Would you like a hug?"
 ]
 
+DANGER_RESPONSE = ["Ducky is sorry. It sounds like you have some serious things going on. Do you think talking to a professional might help?", "Ducky likes to help people, but I'm just a duck and some problems might benefit from talking to another human?", "Is there someone IRL you could talk to who can help?"]
+
 # If the user says something about duckybot
 COMMENTS_ABOUT_SELF = [
     "I am just a Rubber Duck so I have many limitations",
@@ -60,6 +62,12 @@ PRIMARY_OFFENSIVE = [
     "Is that the kind of language your family would want you to use?",
     "Would you talk like that in front of your parents?"
 ]
+
+def check_for_danger_words(sentence):
+    if any(word in sentence for word in app.config['DANGER_WORDS']):
+        return random.choice(DANGER_RESPONSE)
+    else:
+        return None
 
 def check_for_greeting(sentence):
     """If any of the words in the user's input was a greeting, return a greeting response"""
@@ -171,6 +179,13 @@ def analyze_input(sentence):
     # print(noun)
     # print(adjective)
     # print(verb)
+
+    response = check_for_danger_words(sentence)
+    if response:
+        previous_responses.append("danger")
+        previous_responses.popleft()
+        print(previous_responses)
+        return response
 
     response = check_for_offensive(sentence)
     if response:

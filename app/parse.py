@@ -11,10 +11,27 @@ slack_client = SlackClient(app.config['SLACK_TOKEN'])
 previous_responses = deque([None, None, None])
 
 # Sentences we'll respond with if the user greeted us
-GREETING_KEYWORDS = ["hello", "hi", "greetings", "sup", "what's up", "hey", "you there", "anyone there", "yo"]
+GREETING_KEYWORDS = [
+    "hello",
+    "hi",
+    "greetings",
+    "sup",
+    "what's up",
+    "hey",
+    "you there",
+    "anyone there",
+    "yo"
+]
 
 
-GREETING_RESPONSES = ["Hello!", "Welcome!", "Hey!", "Hi!", "How can I help?", "Quack quack!"]
+GREETING_RESPONSES = [
+    "Hello!",
+    "Welcome!",
+    "Hey!",
+    "Hi!",
+    "How can I help?",
+    "Quack quack!"
+]
 
 
 UNCLEAR_RESPONSES = [
@@ -25,6 +42,7 @@ UNCLEAR_RESPONSES = [
     "Yea, I'm confused too.",
     "Uhm, I'm not sure...",
 ]
+
 
 ENCOURAGEMENT = [
     "Programming can be so frustrating sometimes, but you've solved so many challenges before. I know you'll figure this one out too!",
@@ -38,7 +56,13 @@ ENCOURAGEMENT = [
     "Would you like a hug?"
 ]
 
-DANGER_RESPONSE = ["Ducky is sorry. It sounds like you have some serious things going on. Do you think talking to a professional might help?", "Ducky likes to help people, but I'm just a duck and some problems might benefit from talking to another human?", "Is there someone IRL you could talk to who can help?"]
+
+DANGER_RESPONSE = [
+    "Ducky is sorry. It sounds like you have some serious things going on. Do you think talking to a professional might help?",
+    "Ducky likes to help people, but I'm just a duck and some problems might benefit from talking to another human?",
+    "Is there someone IRL you could talk to who can help?"
+]
+
 
 # If the user says something about duckybot
 COMMENTS_ABOUT_SELF = [
@@ -49,6 +73,7 @@ COMMENTS_ABOUT_SELF = [
     "I honor the light in you.",
     "Everything I need is within me"
 ]
+
 
 PRIMARY_OFFENSIVE = [
     "I'm just a little Ducky. Could you please use less offensive words.",
@@ -64,10 +89,15 @@ PRIMARY_OFFENSIVE = [
 ]
 
 def check_for_danger_words(sentence):
-    if any(word in sentence for word in app.config['DANGER_WORDS']):
-        return random.choice(DANGER_RESPONSE)
-    else:
-        return None
+    sentence_split = sentence.split(' ')
+    for word in sentence_split:
+        for w in app.config['DANGER_WORDS']:
+            if word.lower().startswith(w):
+                return random.choice(DANGER_RESPONSE)
+    # if any(word in sentence for word in app.config['DANGER_WORDS']):
+    #     return random.choice(DANGER_RESPONSE)
+    # else:
+    #     return None
 
 def check_for_greeting(sentence):
     """If any of the words in the user's input was a greeting, return a greeting response"""
@@ -167,10 +197,17 @@ def preprocess_text(sentence):
 
 def check_for_offensive(sentence):
     print("In offensive check")
-    if any(word in sentence for word in app.config['OFFENSIVE_WORDS']):
-        return random.choice(PRIMARY_OFFENSIVE)
-    else:
-        return None
+    # if any(word.lower() in sentence for word in app.config['OFFENSIVE_WORDS']):
+    #     return random.choice(PRIMARY_OFFENSIVE)
+    # else:
+    #     return None
+    sentence_split = sentence.split(' ')
+    for word in sentence_split:
+        for w in app.config['OFFENSIVE_WORDS']:
+            if word.lower().startswith(w):
+                return random.choice(PRIMARY_OFFENSIVE)
+
+    return None
 
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
@@ -206,6 +243,12 @@ def analyze_input(sentence):
         previous_responses.append("encouragement")
         previous_responses.popleft()
         print(previous_responses)
+        return response
+
+    response = question_builder(sentence)
+    if response:
+        previous_responses.append("question")
+        previous_responses.popleft()
         return response
     else:
         previous_responses.append("unclear")

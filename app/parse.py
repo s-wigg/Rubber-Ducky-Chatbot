@@ -112,16 +112,14 @@ PRIMARY_OFFENSIVE = [
     "Would you talk like that in front of your parents?"
 ]
 
+
 def check_for_danger_words(sentence):
     sentence_split = sentence.split(' ')
     for word in sentence_split:
         for w in app.config['DANGER_WORDS']:
             if word.lower().startswith(w):
                 return random.choice(DANGER_RESPONSE)
-    # if any(word in sentence for word in app.config['DANGER_WORDS']):
-    #     return random.choice(DANGER_RESPONSE)
-    # else:
-    #     return None
+
 
 def check_for_greeting(sentence):
     """If any of the words in the user's input was a greeting, return a greeting response"""
@@ -131,6 +129,7 @@ def check_for_greeting(sentence):
             return random.choice(GREETING_RESPONSES)
         else:
             return None
+
 
 def check_for_end_convo(sentence):
     for word in sentence.words:
@@ -195,10 +194,10 @@ def find_adjective(sent):
             break
     return adj
 
+
 def find_parts_of_speech(sentence):
     """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
-    Returns a namedtuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
-    # Major_Words = collections.namedtuple('Major_words', ['pronoun', 'noun', 'adjective', 'verb'])
+    Returns a tuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
     pronoun = None
     noun = None
     adjective = None
@@ -227,12 +226,9 @@ def preprocess_text(sentence):
 
     return ' '.join(cleaned)
 
+
 def check_for_offensive(sentence):
     print("In offensive check")
-    # if any(word.lower() in sentence for word in app.config['OFFENSIVE_WORDS']):
-    #     return random.choice(PRIMARY_OFFENSIVE)
-    # else:
-    #     return None
     sentence_split = sentence.split(' ')
     for word in sentence_split:
         for w in app.config['OFFENSIVE_WORDS']:
@@ -241,14 +237,21 @@ def check_for_offensive(sentence):
 
     return None
 
+
+# if no noun identified and no special case matches
+def unclear():
+    return random.choice(UNCLEAR_RESPONSES)
+
+
 def question_builder(pronoun, noun, verb):
     return "Hmm, {} does sound like an interesting problem. What do the logs say?".format(noun)
+
 
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
     cleaned_up_sentence = preprocess_text(sentence)
     sentence = TextBlob(cleaned_up_sentence)
-    
+
     pronoun, noun, adjective, verb = find_parts_of_speech(sentence)
     print(pronoun)
     print(noun)
@@ -289,6 +292,11 @@ def analyze_input(sentence):
         previous_responses.popleft()
         print(previous_responses)
         return response
+
+    if noun is None:
+        previous_responses.append("unclear")
+        previous_responses.popleft()
+        return unclear()
 
     response = question_builder(pronoun, noun, verb)
     if response:

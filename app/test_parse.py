@@ -34,3 +34,9 @@ def test_encouragement():
     sent = "mad mad mad"
     resp = analyze_input(sent)
     assert resp == ENCOURAGEMENT[-1]
+
+def test_unclear():
+    """The bot should ask clarifying question/noncommital statement if userinput can't be parsed"""
+    sent = "1234"
+    resp = analyze_input(sent)
+    assert resp == UNCLEAR_RESPONSES[3]

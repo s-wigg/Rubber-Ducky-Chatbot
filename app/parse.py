@@ -246,6 +246,9 @@ def question_builder(pronoun, noun, verb):
 
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
+    cleaned_up_sentence = preprocess_text(sentence)
+    sentence = TextBlob(cleaned_up_sentence)
+    
     pronoun, noun, adjective, verb = find_parts_of_speech(sentence)
     print(pronoun)
     print(noun)
@@ -301,8 +304,8 @@ def analyze_input(sentence):
 """ refactor to make a build response method ??"""
 
 def send_message(sentence, channel):
-    cleaned_up_sentence = preprocess_text(sentence)
-    sentence = TextBlob(cleaned_up_sentence)
+    # cleaned_up_sentence = preprocess_text(sentence)
+    # sentence = TextBlob(cleaned_up_sentence)
     response = analyze_input(sentence)
     # response = check_for_greeting(sentence)
     # print(response)

@@ -241,13 +241,16 @@ def check_for_offensive(sentence):
 
     return None
 
+def question_builder(pronoun, noun, verb):
+    return "Hmm, {} does sound like an interesting problem. What do the logs say?".format(noun)
+
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
-    # pronoun, noun, adjective, verb = find_parts_of_speech(sentence)
-    # print(pronoun)
-    # print(noun)
-    # print(adjective)
-    # print(verb)
+    pronoun, noun, adjective, verb = find_parts_of_speech(sentence)
+    print(pronoun)
+    print(noun)
+    print(adjective)
+    print(verb)
 
     response = check_for_danger_words(sentence)
     if response:
@@ -284,7 +287,7 @@ def analyze_input(sentence):
         print(previous_responses)
         return response
 
-    response = question_builder(sentence)
+    response = question_builder(pronoun, noun, verb)
     if response:
         previous_responses.append("question")
         previous_responses.popleft()

@@ -91,7 +91,11 @@ COMMENTS_ABOUT_SELF = [
     "I am open to the abundance of the universe.",
     "Where I am right now is exactly where I need to be.",
     "I honor the light in you.",
-    "Everything I need is within me"
+    "Everything I need is within me",
+    "My favorite color is sunflower yellow. Why do you ask?",
+    "My favorite language is Python (but real snakes scare me!)",
+    "I'm just ducky! Thanks for asking.",
+    "I'm too shy for selfies!"
 ]
 
 PRIMARY_OFFENSIVE = [
@@ -204,6 +208,9 @@ def find_parts_of_speech(sentence):
         verb = find_verb(sent)
     return pronoun, noun, adjective, verb
 
+def about_self(sentence, pronoun):
+    if ("?" in sentence) and (pronoun == "I" or "your" in sentence):
+        return random.choice(COMMENTS_ABOUT_SELF)
 
 def preprocess_text(sentence):
     """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
@@ -281,6 +288,13 @@ def analyze_input(sentence):
     response = check_for_end_convo(sentence)
     if response:
         previous_responses.append("convo end")
+        previous_responses.popleft()
+        print(previous_responses)
+        return response
+
+    response = about_self(sentence, pronoun)
+    if response:
+        previous_responses.append("about ducky")
         previous_responses.popleft()
         print(previous_responses)
         return response

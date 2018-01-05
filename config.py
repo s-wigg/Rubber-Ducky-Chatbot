@@ -63,6 +63,8 @@ class Config(object):
         "god damn",
         "goddamn",
         "fuck",
+        "test1234",
+        "loser"
         ])
 
     DANGER_WORDS = set([
@@ -80,5 +82,6 @@ class Config(object):
         "mental illness",
         "assault",
         "rape",
-        "sexual assault"
+        "sexual assault",
+        "dangertest"
         ])

@@ -1,5 +1,9 @@
-# Rubber-Ducky-Chatbot
+# What the Duck?!
 
+## Rubber Ducky Slack Chatbot
+
+## Why do you need Ducky in your life?
+It's 2am and you've hit a roadblock in your code. What the Duck are you supposed to do? Rubber Ducky Slackbot to the rescue! Rubber Ducky can serve as a Rubber Duck for the purposes of thinking through your coding roadblocks. Rubber Ducky can ask you questions and provide links to relevant Stack Overflow questions based on your input. Rubber Ducky will help speed you to the epiphany you're looking for to solve your coding troubles!
 
 ## Installation
 
@@ -14,3 +18,18 @@
 9. Invite Ducky into the channel(s) you designated on the Slack Outgoing Webhooks page. Ducky will respond to any message in that channel, so it's recommended to create a separate channel for those
 
 I recommend that you always run limbo in a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) so that you are running in a clean environment.
+
+### Documentation
+
+##### Slack Documentation
+
+* [Getting started with Slack apps](https://api.slack.com/slack-apps?utm_source=events&utm_campaign=build-bot-workshop&utm_medium=workshop)  
+* [Slack Events API documentation](https://api.slack.com/events?utm_source=events&utm_campaign=build-bot-workshop&utm_medium=workshop)  
+* [Slack Web API documentation](https://api.slack.com/web?utm_source=events&utm_campaign=build-bot-workshop&utm_medium=workshop)
+
+##### Documentation for Tools
+
+* [virtualenv](https://virtualenv.pypa.io/en/latest/userguide/)
+* [flask](http://flask.pocoo.org/)
+* [python-slackclient](http://python-slackclient.readthedocs.io/en/latest/)
+* [ngrok](https://ngrok.com/docs)

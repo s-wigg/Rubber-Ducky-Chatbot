@@ -3,6 +3,7 @@ from app import app
 from slackclient import SlackClient
 from textblob import TextBlob
 import collections
+import re
 from collections import deque
 import random
 
@@ -221,9 +222,9 @@ def preprocess_text(sentence):
         if w == 'i':
             w = 'I'
         if w == "i'm":
-            w = "I'm"
+            w = "I am"
         if w == "im":
-            w = "I'm"
+            w = "I am"
         if '@' in w:
             w = w.replace("@", "")
         if '#' in w:
@@ -248,70 +249,317 @@ def check_for_offensive(sentence):
 def unclear():
     return random.choice(UNCLEAR_RESPONSES)
 
+reflections = {
+    "am": "are",
+    "was": "were",
+    "i": "you",
+    "i'd": "you would",
+    "i've": "you have",
+    "i'll": "you will",
+    "my": "your",
+    "are": "am",
+    "you've": "I have",
+    "you'll": "I will",
+    "your": "my",
+    "yours": "mine",
+    "you": "me",
+    "me": "you"
+}
 
-def question_builder(pronoun, noun, verb):
-    return "Hmm, {} does sound like an interesting problem. What do the logs say?".format(noun)
+cs_babble = [
+    [r'I need help (.*)',
+     ["Who can help you with {0}?",
+      "Can the internet help you with {0}?",
+      "What about {0} isn't working?",
+      "Did you check the logs for {0}?"]],
+
+    [r'Why don\'?t you ([^\?]*)\??',
+     ["Would it help if I could {0}?",
+      "Is {0} something a Ducky should be able to do?",
+      "I really want to help. I'd {0} if I could."]],
+
+    [r'Why can\'?t I ([^\?]*)\??',
+     ["Do you think you should be able to {0}?",
+      "What do you think it would fix if you could {0}?",
+      "I don't know -- why can't you {0}?"]],
+
+    [r'I can\'?t (.*)',
+     ["How do you know you can't {0}?",
+      "Is there another way to {0}",
+      "Can you try a different way to {0}?",
+      "Have you checked Stack Overflow for {0}?"]],
+
+    [r'stuck on (.*)',
+     ["Did you come to me because you are {0}?",
+      "How long have you been {0}?",
+      "How do you feel about being {0}?"]],
+
+    [r'(.*) isn\'?t working',
+     ["What's wrong with {0}?",
+      "What are some reason's it might not be working?",
+      "Is there something else you haven't tried?",
+      "Can you think about it from a different perspective?",
+      "What else can you do to figure out why {0} isn't working?"]],
+
+    [r'Are you ([^\?]*)\??',
+     ["How does whether I am {0} affect your code?",
+      "Does your code care if I am {0}?",
+      "If I am {0} what would that mean for the project?"]],
+
+    [r'How (.*)',
+     ["How do you think it works?",
+      "What's the point of {0}.",
+      "Why does {0} matter for your project?"]],
+
+    [r'Because (.*)',
+     ["Are you sure that's the reason?",
+      "What other explanations come to mind?",
+      "Does that reason apply to anything else?",
+      "If {0}, what else must be true?"]],
+
+    [r'(.*)sorry(.*)',
+     ["There are many times when no apology is needed.",
+      "I'm sorry too."]],
+
+    [r'I think (.*)',
+     ["Do you doubt {0}?",
+      "Do you really think so?",
+      "But you're not sure {0}?",
+      "How can you confirm your hypothesis?"]],
+
+    [r'(.*)friend (.*)',
+     ["Can your friend help?.",
+      "Phone a friend?"]],
+
+    [r'Yes',
+     ["You seem quite sure.",
+      "OK, but can you elaborate a bit?"]],
+
+    [r'(.*)computer(.*)',
+     ["Are you really talking about me?",
+      "Does it seem strange to talk to a computer?",
+      "How do computers make you feel?",
+      "Do you feel threatened by computers?"]],
+
+    [r'Is it (.*)',
+     ["Do you think it is {0}?",
+      "Perhaps it's {0} -- what do you think?",
+      "If it were {0}, what would you do?",
+      "If it were {0}, how would you go about fixing it?"
+      "It could well be that {0}. How can you check?"]],
+
+    [r'It is (.*)',
+     ["You seem very certain.",
+      "If I told you that it probably isn't {0}, what else would you try?"]],
+
+    [r'Can you ([^\?]*)\??',
+     ["Ducky probably can't, but can you {0}?",
+      "If I could {0}, what would you do next?",
+      "Did you already try {0}?"]],
+
+    [r'Can I ([^\?]*)\??',
+     ["Ducky probably can't, but could you {0}?",
+      "What would change if I could {0}?",
+      "How would it help if I could {0}?"]],
+
+    [r'You are (.*)',
+     ["Why do you think I am {0}?",
+      "Does it please you to think that I'm {0}?",
+      "Perhaps you would like me to be {0}.",
+      "Perhaps you're really talking about yourself?"]],
+
+    [r'You\'?re (.*)',
+     ["How does me being {0} pertain to your code?",
+      "Does your code care that I'm {0}?",
+      "Are we talking about me or your code?"]],
+
+    [r'I don\'?t (.*)',
+     ["Don't you really {0}?",
+      "Why don't you {0}?",
+      "Do you want to {0}?"]],
+
+    [r'I feel (.*)',
+     ["Do you often feel {0}?",
+      "What's making you feel {0}?",
+      "Since you feel {0}, what can you do about it?"]],
+
+    [r'Why doesn\'?t (.*)',
+     ["Why do youthink {0}?"]],
+
+    [r'Why (.*)',
+     ["Why do you think {0}?"]],
+
+    [r'I want (.*)',
+     ["How would {0} help your project?",
+      "What differene does {0} make for your code?",
+      "How would it work if it {0}?",
+      "If you got {0}, then what would you do?"]],
+
+    [r'(.*)database(.*)',
+     ["What's up with your database?",
+      "Do you need to migrate your database?",
+      "Should you reset the database?",
+      "Ugh, data overload!",
+      "Is it the structure that's the problem?",
+      "Is there a way to make your database faster?"]],
+
+    [r'(.*)javascript(.*)',
+     ["Java is to javascript as car is to carpet.",
+      "Is it an ansynchoronos problem?",
+      "What is this?",
+      "But really, what is this?",
+      "Could jQuery fix it?",
+      "Are you missing a semicolon?",
+      "Sometimes Ducky feels like a fatal token too."]],
+
+    [r'(.*)java(.*)',
+     ["Java is to javascript as car is to carpet.",
+      "Ducky wants to learn a strictly typed language.",
+      "I'm sorry your java is giving you trouble.",
+      "Should Ducky learn Java too?",
+      "Is it because it's immutable?",
+      "Do you think it's a memory leak?"]],
+
+    [r'(.*)error(.*)',
+     ["Did you google that error?",
+      "What does the error tell you?",
+      "What do you think is causing the error?",
+      "What have you tried to fix the error?",
+      "What else could you try?",
+      "Is the server running?"]],
+
+    [r'(.*)ruby(.*)',
+     ["Did you forget an 'end'?",
+      "What's the error message say?",
+      "Did you check the Ruby documentation for {0}?",
+      "Did you search Stack Overflow for Ruby and {0}?"]],
+
+    [r'(.*)python(.*)',
+     ["Did you forget a colon?",
+      "Have you checked the Python documentation?",
+      "Hmmm, tell me more about your python problems",
+      "Did you google python and {0}?",
+      "Do you like programming in python?"]],
+
+    [r'(.*)code(.*)',
+     ["Tell me more about your code?",
+      "Can you walk me through your code?",
+      "Don't forget that coding is fun even when it's frustrating sometimes.",
+      "And then what did you try?",
+      "Did you check Stack Overflow?",
+      "Are there any error logs to look at?"]],
+
+    [r'(.*)firewall(.*)',
+     ["Yea, it's always the firewall?",
+      "Ugh, firewalls.",
+      "A firewall is a digital wall that prevents users from doing what they want"]],
+
+    [r'(.*)hack(.*)',
+     ["Do you think that's a good idea?",
+      "Is this something you're sure is a good idea?",
+      "Is this illegal?",
+      "Ducky is a quacker but not a hacker"]],
+
+    [r'(.*)internet(.*)',
+     ["Did you turn the wifi off and back on again?",
+      "Is it the firewall?",
+      "The internet is a big pond for a little Ducky like me.",
+      "Many things on the internet scare me."]],
+
+    [r'quit',
+     ["Don't quit!.",
+      "You shouldn't quit, but sometimes a break can help.",
+      "Maybe a break will give you some fresh perspective?"]],
+]
+
+
+def reflect(fragment):
+    tokens = fragment.lower().split()
+    for i, token in enumerate(tokens):
+        if token in reflections:
+            tokens[i] = reflections[token]
+    return ' '.join(tokens)
+
+
+# def analyze(statement):
+#     for pattern, responses in psychobabble:
+#         match = re.match(pattern, statement.rstrip(".!"))
+#         if match:
+#             response = random.choice(responses)
+#             return response.format(*[reflect(g) for g in match.groups()])
+
+def question_builder(sentence, noun, pronoun):
+    print("in question_builder")
+    for pattern, responses in cs_babble:
+        print(pattern)
+        match = re.match(pattern, sentence)
+        print(match)
+        if match:
+            response = random.choice(responses)
+            print(response)
+            # add_on = random.choice([[reflect(g) for g in match.groups()], noun])
+            return response.format(*[reflect(g) for g in match.groups()])
 
 
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
     cleaned_up_sentence = preprocess_text(sentence)
-    sentence = TextBlob(cleaned_up_sentence)
+    textBlobSentence = TextBlob(cleaned_up_sentence)
 
-    pronoun, noun, adjective, verb = find_parts_of_speech(sentence)
+    pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
     print(pronoun)
     print(noun)
     print(adjective)
     print(verb)
 
-    response = check_for_danger_words(sentence)
+    response = check_for_danger_words(textBlobSentence)
     if response:
         previous_responses.append("danger")
         previous_responses.popleft()
         print(previous_responses)
         return response
 
-    response = check_for_offensive(sentence)
+    response = check_for_offensive(textBlobSentence)
     if response:
         previous_responses.append("offensive")
         previous_responses.popleft()
         print(previous_responses)
         return response
 
-    response = check_for_greeting(sentence)
+    response = check_for_greeting(textBlobSentence)
     if response:
         previous_responses.append("greeting")
         previous_responses.popleft()
         print(previous_responses)
         return response
 
-    response = check_for_end_convo(sentence)
+    response = check_for_end_convo(textBlobSentence)
     if response:
         previous_responses.append("convo end")
         previous_responses.popleft()
         print(previous_responses)
         return response
 
-    response = about_self(sentence, pronoun)
+    response = about_self(textBlobSentence, pronoun)
     if response:
         previous_responses.append("about ducky")
         previous_responses.popleft()
         print(previous_responses)
         return response
 
-    response = sentiment_analysis(sentence)
+    response = sentiment_analysis(textBlobSentence)
     if response:
         previous_responses.append("encouragement")
         previous_responses.popleft()
         print(previous_responses)
         return response
 
-    if noun is None:
-        previous_responses.append("unclear")
-        previous_responses.popleft()
-        return unclear()
+    # if noun is None:
+    #     previous_responses.append("unclear")
+    #     previous_responses.popleft()
+    #     return unclear()
 
-    response = question_builder(pronoun, noun, verb)
+    response = question_builder(cleaned_up_sentence, noun, pronoun)
     if response:
         previous_responses.append("question")
         previous_responses.popleft()

@@ -35,6 +35,15 @@ def test_encouragement():
     resp = analyze_input(sent)
     assert resp == ENCOURAGEMENT[-1]
 
+def test_encouragement_not_repeated():
+    """The bot should not offer encouragement twice in a row"""
+    sent = "mad mad mad"
+    # analyze_input(sent)
+    print("IN TEST")
+    resp = analyze_input(sent)
+    print(previous_responses)
+    assert resp not in ENCOURAGEMENT
+
 def test_unclear():
     """The bot should ask clarifying question/noncommital statement if userinput can't be parsed"""
     sent = "1234"

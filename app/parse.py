@@ -23,7 +23,6 @@ GREETING_KEYWORDS = [
     "yo"
 ]
 
-
 GREETING_RESPONSES = [
     "Hello!",
     "Welcome!",
@@ -67,7 +66,6 @@ UNCLEAR_RESPONSES = [
     "Uhm, I'm not sure...",
 ]
 
-
 ENCOURAGEMENT = [
     "Programming can be so frustrating sometimes, but you've solved so many challenges before. I know you'll figure this one out too!",
     "It's ok! If debugging is the process of removing software bugs, then programming must be the process of putting them in.",
@@ -80,13 +78,11 @@ ENCOURAGEMENT = [
     "Would you like a hug?"
 ]
 
-
 DANGER_RESPONSE = [
     "Ducky is sorry. It sounds like you have some serious things going on. Do you think talking to a professional might help?",
     "Ducky likes to help people, but I'm just a duck and some problems might benefit from talking to another human?",
     "Is there someone IRL you could talk to who can help?"
 ]
-
 
 # If the user says something about duckybot
 COMMENTS_ABOUT_SELF = [
@@ -97,7 +93,6 @@ COMMENTS_ABOUT_SELF = [
     "I honor the light in you.",
     "Everything I need is within me"
 ]
-
 
 PRIMARY_OFFENSIVE = [
     "I'm just a little Ducky. Could you please use less offensive words.",
@@ -222,6 +217,10 @@ def preprocess_text(sentence):
             w = "I'm"
         if w == "im":
             w = "I'm"
+        if '@' in w:
+            w = w.replace("@", "")
+        if '#' in w:
+            w = w.replace("#", "")
         cleaned.append(w)
 
     return ' '.join(cleaned)

@@ -267,6 +267,128 @@ reflections = {
 }
 
 cs_babble = [
+
+    [r'(.*)(frontend|backend|front-end|back-end)(.*)',
+     ["Hmm, Ducky's more of a full stack Duck-veloper.",
+      "Do you prefer frontend or backend?",
+      "Have you done integration testing?"]],
+
+    [r'(.*)database(.*)',
+     ["What's up with your database?",
+      "Do you need to migrate your database?",
+      "Should you reset the database?",
+      "Ugh, data overload!",
+      "Is it the structure that's the problem?",
+      "Is there a way to make your database faster?",
+      "Does the data your importing match the model?",
+      "Is your CSV file the problem?"]],
+
+    [r'(.*)whiteboard(.*)',
+     ["Ooof, whiteboard!",
+      "Can you reverse a string for me?",
+      "Just keep talking!",
+      "My nightmares involve being asked to balance a binary tree."]],
+
+    [r'(.*)javascript(.*)',
+     ["Java is to javascript as car is to carpet.",
+      "Is it an ansynchoronos problem?",
+      "What is this?",
+      "But really, what is this?",
+      "Could jQuery fix it?",
+      "Are you missing a semicolon?",
+      "Sometimes Ducky feels like a fatal token too."]],
+
+    [r'(.*)java(.*)',
+     ["Java is to javascript as car is to carpet.",
+      "Ducky wants to learn a strictly typed language.",
+      "I'm sorry your java is giving you trouble.",
+      "Should Ducky learn Java too?",
+      "Is it because it's immutable?",
+      "Do you think it's a memory leak?"]],
+
+    [r'(.*)(react|native|angular)(.*)',
+     ["What backend are you using?.",
+      "Ducky has definitely heard that {0} can be a problem!",
+      "Have you checked Stack Overflow for {0}."]],
+
+    [r'(.*)app(.*)',
+     ["Tell me about your app!",
+      "Can I get your app in the App store?",
+      "What does your app do?",
+      "Where did you get the idea for your app?"]],
+
+    [r'(.*)(TDD|test)(.*)',
+     ["Ducky thinks TDD is the best thing since stale bread!",
+      "Passing tests make Ducky feel on top of the world. Failing tests make Ducky determined to fix them!",
+      "What's the error message say?",
+      "Did you google the error message?"]],
+
+    [r'(.*)(strict|typed)(.*)',
+     ["Ducky wants to learn a strictly typed language.",
+      "I'm sorry your java is giving you trouble.",
+      "Did you declare your variables properly?",
+      "Is it because it's immutable?",
+      "Do you think it's a memory leak?"]],
+
+    [r'(.*)error(.*)',
+     ["Did you google that error?",
+      "What does the error tell you?",
+      "What do you think is causing the error?",
+      "What have you tried to fix the error?",
+      "What else could you try?",
+      "Is the server running?"]],
+
+    [r'(.*)(nil|null|none)(.*)',
+     ["Yep, that definitely sounds like a problem",
+      "What does the error tell you?",
+      "What do you think is causing the error?"]],
+
+    [r'(.*)ruby(.*)',
+     ["Did you forget an 'end'?",
+      "What's the error message say?",
+      "Did you check the Ruby documentation for {0}?",
+      "Did you search Stack Overflow for Ruby and {0}?"]],
+
+    [r'(.*)python(.*)',
+     ["Did you forget a colon?",
+      "Have you checked the Python documentation?",
+      "Hmmm, tell me more about your python problems",
+      "Did you google python and {0}?",
+      "Do you like programming in python?"]],
+
+    [r'(.*)code(.*)',
+     ["Tell me more about your code?",
+      "Can you walk me through your code?",
+      "Don't forget that coding is fun even when it's frustrating sometimes.",
+      "And then what did you try?",
+      "Did you check Stack Overflow?",
+      "Are there any error logs to look at?"]],
+
+    [r'(.*)firewall(.*)',
+     ["Yea, it's always the firewall?",
+      "Ugh, firewalls.",
+      "A firewall is a digital wall that prevents users from doing what they want"]],
+
+    [r'(.*)hack(.*)',
+     ["Do you think that's a good idea?",
+      "Is this something you're sure is a good idea?",
+      "Is this illegal?",
+      "Ducky is a quacker but not a hacker"]],
+
+    [r'(.*)internet(.*)',
+     ["Did you turn the wifi off and back on again?",
+      "Is it the firewall?",
+      "The internet is a big pond for a little Ducky like me.",
+      "Many things on the internet scare me."]],
+
+    [r'(quit|give up)',
+     ["Don't quit!",
+     "Don't give up!",
+     "Perserve! You've solved so many bugs in the past. Odds are with you that you can solve this one too.",
+     "May the odds be ever in your favor!",
+      "You shouldn't quit, but sometimes a break can help.",
+      "Maybe a break will give you some fresh perspective?"]],
+
     [r'I need help (.*)',
      ["Who can help you with {0}?",
       "Can the internet help you with {0}?",
@@ -289,7 +411,7 @@ cs_babble = [
       "Can you try a different way to {0}?",
       "Have you checked Stack Overflow for {0}?"]],
 
-    [r'stuck on (.*)',
+    [r'(.*)stuck on(.*)',
      ["Did you come to me because you are {0}?",
       "How long have you been {0}?",
       "How do you feel about being {0}?"]],
@@ -336,10 +458,10 @@ cs_babble = [
       "OK, but can you elaborate a bit?"]],
 
     [r'(.*)computer(.*)',
-     ["Are you really talking about me?",
-      "Does it seem strange to talk to a computer?",
-      "How do computers make you feel?",
-      "Do you feel threatened by computers?"]],
+     ["Is it a hardware issue?",
+      "Have you tried restarting it to fix {0}?",
+      "Tell me more about {0}?",
+      "Tell me about what the issue is with {0}?"]],
 
     [r'Is it (.*)',
      ["Do you think it is {0}?",
@@ -393,83 +515,7 @@ cs_babble = [
      ["How would {0} help your project?",
       "What differene does {0} make for your code?",
       "How would it work if it {0}?",
-      "If you got {0}, then what would you do?"]],
-
-    [r'(.*)database(.*)',
-     ["What's up with your database?",
-      "Do you need to migrate your database?",
-      "Should you reset the database?",
-      "Ugh, data overload!",
-      "Is it the structure that's the problem?",
-      "Is there a way to make your database faster?"]],
-
-    [r'(.*)javascript(.*)',
-     ["Java is to javascript as car is to carpet.",
-      "Is it an ansynchoronos problem?",
-      "What is this?",
-      "But really, what is this?",
-      "Could jQuery fix it?",
-      "Are you missing a semicolon?",
-      "Sometimes Ducky feels like a fatal token too."]],
-
-    [r'(.*)java(.*)',
-     ["Java is to javascript as car is to carpet.",
-      "Ducky wants to learn a strictly typed language.",
-      "I'm sorry your java is giving you trouble.",
-      "Should Ducky learn Java too?",
-      "Is it because it's immutable?",
-      "Do you think it's a memory leak?"]],
-
-    [r'(.*)error(.*)',
-     ["Did you google that error?",
-      "What does the error tell you?",
-      "What do you think is causing the error?",
-      "What have you tried to fix the error?",
-      "What else could you try?",
-      "Is the server running?"]],
-
-    [r'(.*)ruby(.*)',
-     ["Did you forget an 'end'?",
-      "What's the error message say?",
-      "Did you check the Ruby documentation for {0}?",
-      "Did you search Stack Overflow for Ruby and {0}?"]],
-
-    [r'(.*)python(.*)',
-     ["Did you forget a colon?",
-      "Have you checked the Python documentation?",
-      "Hmmm, tell me more about your python problems",
-      "Did you google python and {0}?",
-      "Do you like programming in python?"]],
-
-    [r'(.*)code(.*)',
-     ["Tell me more about your code?",
-      "Can you walk me through your code?",
-      "Don't forget that coding is fun even when it's frustrating sometimes.",
-      "And then what did you try?",
-      "Did you check Stack Overflow?",
-      "Are there any error logs to look at?"]],
-
-    [r'(.*)firewall(.*)',
-     ["Yea, it's always the firewall?",
-      "Ugh, firewalls.",
-      "A firewall is a digital wall that prevents users from doing what they want"]],
-
-    [r'(.*)hack(.*)',
-     ["Do you think that's a good idea?",
-      "Is this something you're sure is a good idea?",
-      "Is this illegal?",
-      "Ducky is a quacker but not a hacker"]],
-
-    [r'(.*)internet(.*)',
-     ["Did you turn the wifi off and back on again?",
-      "Is it the firewall?",
-      "The internet is a big pond for a little Ducky like me.",
-      "Many things on the internet scare me."]],
-
-    [r'quit',
-     ["Don't quit!.",
-      "You shouldn't quit, but sometimes a break can help.",
-      "Maybe a break will give you some fresh perspective?"]],
+      "If you got {0}, then what would you do?"]]
 ]
 
 
@@ -480,13 +526,6 @@ def reflect(fragment):
             tokens[i] = reflections[token]
     return ' '.join(tokens)
 
-
-# def analyze(statement):
-#     for pattern, responses in psychobabble:
-#         match = re.match(pattern, statement.rstrip(".!"))
-#         if match:
-#             response = random.choice(responses)
-#             return response.format(*[reflect(g) for g in match.groups()])
 
 def question_builder(sentence, noun, pronoun):
     print("in question_builder")
@@ -540,13 +579,6 @@ def analyze_input(sentence):
         print(previous_responses)
         return response
 
-    response = about_self(textBlobSentence, pronoun)
-    if response:
-        previous_responses.append("about ducky")
-        previous_responses.popleft()
-        print(previous_responses)
-        return response
-
     response = sentiment_analysis(textBlobSentence)
     if response:
         previous_responses.append("encouragement")
@@ -563,6 +595,13 @@ def analyze_input(sentence):
     if response:
         previous_responses.append("question")
         previous_responses.popleft()
+        return response
+
+    response = about_self(textBlobSentence, pronoun)
+    if response:
+        previous_responses.append("about ducky")
+        previous_responses.popleft()
+        print(previous_responses)
         return response
     else:
         previous_responses.append("unclear")

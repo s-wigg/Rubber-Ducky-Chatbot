@@ -1,4 +1,4 @@
-# What the Duck?! -- Rubber Ducky Slack Chatbot
+# What the Duck?! — Rubber Ducky Slack Chatbot
 
 ## Why do you need Ducky in your life?
 It's 2am and you've hit a roadblock in your code. What the Duck are you supposed to do? Rubber Ducky Slackbot to the rescue! Rubber Ducky can serve as a Rubber Duck for the purposes of thinking through your coding roadblocks. Rubber Ducky can ask you questions and provide links to relevant Stack Overflow questions based on your input. Rubber Ducky will help speed you to the epiphany you're looking for to solve your coding troubles!

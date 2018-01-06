@@ -49,3 +49,28 @@ def test_unclear():
     sent = "1234"
     resp = analyze_input(sent)
     assert resp == UNCLEAR_RESPONSES[3]
+
+def test_question_builder():
+    """The bot should respond appropriately when key word/phrases are used"""
+    sent = "What are some good python resources"
+    resp = analyze_input(sent)
+    assert resp == cs_babble[12][1][2]
+
+def test_question_builder2():
+    """The bot should respond appropriately when key word/phrases are used"""
+    sent = "I need help with fatal token error"
+    resp = analyze_input(sent)
+    assert resp == cs_babble[9][1][3]
+
+def test_question_builder3():
+    """The bot should respond appropriately when key word/phrases are used"""
+    sent = "Can you whiteboard?"
+    resp = analyze_input(sent)
+    assert resp == cs_babble[2][1][2]
+
+
+# def test_about_self():
+#     """The bot should respond to questions about itself"""
+#     sent = "How are you?"
+#     resp = analyze_input(sent)
+#     assert resp == COMMENTS_ABOUT_SELF[3]

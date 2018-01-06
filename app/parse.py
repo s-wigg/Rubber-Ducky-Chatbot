@@ -518,7 +518,6 @@ cs_babble = [
       "If you got {0}, then what would you do?"]]
 ]
 
-
 def reflect(fragment):
     tokens = fragment.lower().split()
     for i, token in enumerate(tokens):

@@ -1,1 +1,3 @@
-{}
+{
+  "test_parse.py::test_response_directly": true
+}

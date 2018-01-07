@@ -606,14 +606,17 @@ def analyze_input(sentence):
 """ refactor to make a build response method ??"""
 
 def send_message(sentence, channel):
-    # cleaned_up_sentence = preprocess_text(sentence)
-    # sentence = TextBlob(cleaned_up_sentence)
     response = analyze_input(sentence)
-    # response = check_for_greeting(sentence)
     # print(response)
     # print(channel)
     # print(slack_client.api_call("api.test"))
-    # print(slack_client.api_call("auth.test"))
+    print(slack_client.api_call("auth.test"))
+    # print(slack_client.api_call(
+    #         "chat.postMessage",
+    #         channel=channel,
+    #         text=response,
+    #         as_user=True
+    #         ))
     slack_client.api_call(
             "chat.postMessage",
             channel=channel,

@@ -1,6 +1,13 @@
+import sys
+import json
+
 import random
 import pytest
+from pytest import fixture
+from flask import Flask
+from six import b
 
+from app import app
 from parse import *
 
 random.seed(0)
@@ -73,3 +80,18 @@ def test_about_self():
     sent = "How are you?"
     resp = analyze_input(sent)
     assert resp == COMMENTS_ABOUT_SELF[-1]
+
+
+def test_api_test():
+    resp = slack_client.api_call("auth.test")
+    assert resp["ok"] == True
+    assert resp['user'] == 'ducky'
+
+def test_api_response_ok_false_bad_channel():
+    resp = slack_client.api_call(
+            "chat.postMessage",
+            channel='U1234',
+            text="hi",
+            as_user=True
+            )
+    assert resp["ok"] == False

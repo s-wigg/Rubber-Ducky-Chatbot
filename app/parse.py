@@ -428,11 +428,6 @@ cs_babble = [
       "Does your code care if I am {0}?",
       "If I am {0} what would that mean for the project?"]],
 
-    [r'How (.*)',
-     ["How do you think it works?",
-      "What's the point of {0}.",
-      "Why does {0} matter for your project?"]],
-
     [r'Because (.*)',
      ["Are you sure that's the reason?",
       "What other explanations come to mind?",

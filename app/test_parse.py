@@ -68,9 +68,8 @@ def test_question_builder3():
     resp = analyze_input(sent)
     assert resp == cs_babble[2][1][2]
 
-
-# def test_about_self():
-#     """The bot should respond to questions about itself"""
-#     sent = "How are you?"
-#     resp = analyze_input(sent)
-#     assert resp == COMMENTS_ABOUT_SELF[3]
+def test_about_self():
+    """The bot should respond to questions about itself"""
+    sent = "How are you?"
+    resp = analyze_input(sent)
+    assert resp == COMMENTS_ABOUT_SELF[-1]

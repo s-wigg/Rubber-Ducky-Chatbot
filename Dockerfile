@@ -1,5 +1,6 @@
 # our base image
-FROM python:3.6-onbuild
+#FROM python:3.6-onbuild
+FROM amazon/aws-eb-python:3.4.2-onbuild-3.5.1
 
 # specify the port number the container should expose
 EXPOSE 5000

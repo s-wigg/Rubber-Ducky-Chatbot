@@ -1,3 +1,8 @@
+import logging
 from app import app
 
-print("in what the duck file")
+logging.basicConfig()
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+logger.info("in what the duck file")

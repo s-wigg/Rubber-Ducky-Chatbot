@@ -3,12 +3,17 @@ from app import app
 from slackclient import SlackClient
 from textblob import TextBlob
 import collections
+import logging
 import re
 from collections import deque
 import random
 
+logging.basicConfig()
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
 slack_client = SlackClient(app.config['SLACK_TOKEN'])
-print(slack_client)
+logger.info(slack_client)
 
 previous_responses = deque([None, None, None])
 
@@ -124,7 +129,7 @@ def check_for_danger_words(sentence):
 
 def check_for_greeting(sentence):
     """If any of the words in the user's input was a greeting, return a greeting response"""
-    print("IN Check for greeting")
+    logger.info("IN Check for greeting")
     for word in sentence.words:
         if word.lower() in GREETING_KEYWORDS:
             return random.choice(GREETING_RESPONSES)
@@ -141,8 +146,8 @@ def check_for_end_convo(sentence):
 
 
 def sentiment_analysis(sentence):
-    print(sentence.sentiment)
-    print(previous_responses)
+    logger.info(sentence.sentiment)
+    logger.info(previous_responses)
     if (sentence.sentiment.polarity < -0.1) and (sentence.sentiment.subjectivity > 0.3) and (previous_responses[-1] != "encouragement"):
         return random.choice(ENCOURAGEMENT)
     else:
@@ -236,7 +241,7 @@ def preprocess_text(sentence):
 
 
 def check_for_offensive(sentence):
-    print("In offensive check")
+    logger.info("In offensive check")
     sentence_split = sentence.split(' ')
     for word in sentence_split:
         for w in app.config['OFFENSIVE_WORDS']:
@@ -523,7 +528,7 @@ def reflect(fragment):
 
 
 def question_builder(sentence, noun, pronoun):
-    print("in question_builder")
+    logger.info("in question_builder")
     for pattern, responses in cs_babble:
         print(pattern)
         match = re.match(pattern, sentence)
@@ -537,7 +542,7 @@ def question_builder(sentence, noun, pronoun):
 
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
-    print("analyze_input")
+    logger.info("analyze_input")
     cleaned_up_sentence = preprocess_text(sentence)
     textBlobSentence = TextBlob(cleaned_up_sentence)
 

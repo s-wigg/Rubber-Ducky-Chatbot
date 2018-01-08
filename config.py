@@ -1,12 +1,17 @@
 import os
+import logging
 
-print("In config file")
+logging.basicConfig()
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+logger.info("In config file")
 class Config(object):
     SLACK_TOKEN = os.environ.get('SLACK_TOKEN') or 'none'
 
     # BOT_ID = os.environ.get("BOT_ID") or 'none'
     # SLACK_CHANNEL = os.environ.get("SLACK_CHANNEL")
-    
+
     SLACK_OUTGOING_WEBHOOK_SECRET = os.environ.get('SLACK_OUTGOING_WEBHOOK_SECRET')
 
     OFFENSIVE_WORDS = set([

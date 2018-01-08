@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker run --rm -d -p 5000:5000 -e SLACK_TOKEN=$SLACK_TOKEN -e SLACK_OUTGOING_WEBHOOK_SECRET=$SLACK_OUTGOING_WEBHOOK_SECRET --name ducky ducky

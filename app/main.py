@@ -2,7 +2,10 @@ import os
 from flask import Flask, request, Response
 from app import app
 from app.parse import send_message
-
+# from config import Config
+#
+# app = Flask(__name__)
+# app.config.from_object(Config)
 
 @app.route('/slack', methods=['POST'])
 def inbound():
@@ -15,8 +18,8 @@ def inbound():
         print(inbound_message)
         if username != 'ducky':
             send_message(text, channel)
-    # return Response(), 200
-    return Response(text, status=200)
+    return Response(), 200
+    # return Response(text, status=200)
 
 
 @app.route('/', methods=['GET'])
@@ -25,4 +28,5 @@ def test():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(host="0.0.0.0", debug=True, port=80)
+    app.run(host="0.0.0.0", debug=True)

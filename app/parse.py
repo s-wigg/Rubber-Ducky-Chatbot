@@ -8,6 +8,7 @@ from collections import deque
 import random
 
 slack_client = SlackClient(app.config['SLACK_TOKEN'])
+print(slack_client)
 
 previous_responses = deque([None, None, None])
 
@@ -536,6 +537,7 @@ def question_builder(sentence, noun, pronoun):
 
 # check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
+    print("analyze_input")
     cleaned_up_sentence = preprocess_text(sentence)
     textBlobSentence = TextBlob(cleaned_up_sentence)
 
@@ -610,13 +612,7 @@ def send_message(sentence, channel):
     # print(response)
     # print(channel)
     # print(slack_client.api_call("api.test"))
-    print(slack_client.api_call("auth.test"))
-    # print(slack_client.api_call(
-    #         "chat.postMessage",
-    #         channel=channel,
-    #         text=response,
-    #         as_user=True
-    #         ))
+    # print(slack_client.api_call("auth.test"))
     slack_client.api_call(
             "chat.postMessage",
             channel=channel,

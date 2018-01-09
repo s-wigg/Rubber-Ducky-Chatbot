@@ -31,3 +31,10 @@ I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virt
 * [flask](http://flask.pocoo.org/)
 * [python-slackclient](http://python-slackclient.readthedocs.io/en/latest/)
 * [ngrok](https://ngrok.com/docs)
+
+# Thank Yous
+The following tutorials were particularly helpful in the development of this project:
+
+* [Brobot by Liza Daly](https://apps.worldwritable.com/tutorials/chatbot/)
+* [Getting Started With the Slack API Using Python and Flask by Matt Makai](https://realpython.com/blog/python/getting-started-with-the-slack-api-using-python-and-flask/)
+* [Implementing the Famous ELIZA chatbot in Python by Evan Dempsey](https://www.smallsurething.com/implementing-the-famous-eliza-chatbot-in-python/)

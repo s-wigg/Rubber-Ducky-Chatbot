@@ -12,6 +12,9 @@ logging.basicConfig()
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+if not app.config['SLACK_TOKEN']:
+    raise Exception("NO SLACK TOKEN")
+    
 slack_client = SlackClient(app.config['SLACK_TOKEN'])
 logger.info(slack_client)
 

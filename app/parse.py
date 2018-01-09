@@ -14,7 +14,7 @@ logger.setLevel(logging.DEBUG)
 
 if not app.config['SLACK_TOKEN']:
     raise Exception("NO SLACK TOKEN")
-    
+
 slack_client = SlackClient(app.config['SLACK_TOKEN'])
 logger.info(slack_client)
 
@@ -131,7 +131,7 @@ def check_for_danger_words(sentence):
 
 
 def check_for_greeting(sentence):
-    """If any of the words in the user's input was a greeting, return a greeting response"""
+    """If user's input was a greeting, return a greeting response"""
     logger.info("IN Check for greeting")
     for word in sentence.words:
         if word.lower() in GREETING_KEYWORDS:
@@ -151,13 +151,17 @@ def check_for_end_convo(sentence):
 def sentiment_analysis(sentence):
     logger.info(sentence.sentiment)
     logger.info(previous_responses)
-    if (sentence.sentiment.polarity < -0.1) and (sentence.sentiment.subjectivity > 0.3) and (previous_responses[-1] != "encouragement"):
+    if ((sentence.sentiment.polarity < -0.1)
+    and (sentence.sentiment.subjectivity > 0.3)
+    and (previous_responses[-1] != "encouragement")):
         return random.choice(ENCOURAGEMENT)
     else:
         return None
 
+
 def find_pronoun(sent):
-    """Given a sentence, find a preferred pronoun to respond with. Returns None if no candidate pronoun is found in the input"""
+    """Given a sentence, find a preferred pronoun.
+    Returns None if no candidate pronoun found"""
     pronoun = None
 
     for word, part_of_speech in sent.pos_tags:
@@ -165,7 +169,8 @@ def find_pronoun(sent):
         if part_of_speech == 'PRP' and word.lower() == 'you':
             pronoun = 'I'
         elif part_of_speech == 'PRP' and word == 'I':
-            # If the user mentioned themselves, then they will definitely be the pronoun
+            # If the user mentioned themselves,
+            # then they will definitely be the pronoun
             pronoun = 'You'
     return pronoun
 
@@ -173,11 +178,9 @@ def find_pronoun(sent):
 def find_verb(sent):
     """Pick a candidate verb for the sentence."""
     verb = None
-    pos = None
     for word, part_of_speech in sent.pos_tags:
         if part_of_speech.startswith('VB'):  # This is a verb
             verb = word
-            pos = part_of_speech
             break
     return verb
 
@@ -205,8 +208,10 @@ def find_adjective(sent):
 
 
 def find_parts_of_speech(sentence):
-    """Given a parsed input, find the best pronoun, direct noun, adjective, and verb to match their input.
-    Returns a tuple of pronoun, noun, adjective, verb any of which may be None if there was no good match"""
+    """Given a parsed input, find the best pronoun, direct noun,
+    adjective, and verb to match their input.
+    Returns a tuple of pronoun, noun, adjective,
+    verb any of which may be None if there was no good match"""
     pronoun = None
     noun = None
     adjective = None
@@ -218,9 +223,11 @@ def find_parts_of_speech(sentence):
         verb = find_verb(sent)
     return pronoun, noun, adjective, verb
 
+
 def about_self(sentence, pronoun):
     if ("?" in sentence) and (pronoun == "I" or "your" in sentence):
         return random.choice(COMMENTS_ABOUT_SELF)
+
 
 def preprocess_text(sentence):
     """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
@@ -258,6 +265,7 @@ def check_for_offensive(sentence):
 def unclear():
     return random.choice(UNCLEAR_RESPONSES)
 
+
 reflections = {
     "am": "are",
     "was": "were",
@@ -291,6 +299,11 @@ cs_babble = [
       "Is there a way to make your database faster?",
       "Does the data your importing match the model?",
       "Is your CSV file the problem?"]],
+
+    [r'(.*)docker(.*)',
+     ["Ducky lives in a Docker container!",
+      "Docker images are confusing!",
+      "Docker images are extensible, but Ducky is not :("]],
 
     [r'(.*)whiteboard(.*)',
      ["Ooof, whiteboard!",
@@ -393,7 +406,7 @@ cs_babble = [
     [r'(quit|give up)',
      ["Don't quit!",
      "Don't give up!",
-     "Perserve! You've solved so many bugs in the past. Odds are with you that you can solve this one too.",
+     "Persevere! You've solved so many bugs in the past. Odds are with you that you can solve this one too.",
      "May the odds be ever in your favor!",
       "You shouldn't quit, but sometimes a break can help.",
       "Maybe a break will give you some fresh perspective?"]],
@@ -427,7 +440,7 @@ cs_babble = [
 
     [r'(.*) isn\'?t working',
      ["What's wrong with {0}?",
-      "What are some reason's it might not be working?",
+      "What are some reasons it might not be working?",
       "Is there something else you haven't tried?",
       "Can you think about it from a different perspective?",
       "What else can you do to figure out why {0} isn't working?"]],
@@ -455,7 +468,8 @@ cs_babble = [
 
     [r'(.*)friend (.*)',
      ["Can your friend help?.",
-      "Phone a friend?"]],
+      "Phone a friend?",
+      "Is Ducky your friend?"]],
 
     [r'Yes',
      ["You seem quite sure.",
@@ -522,6 +536,7 @@ cs_babble = [
       "If you got {0}, then what would you do?"]]
 ]
 
+
 def reflect(fragment):
     tokens = fragment.lower().split()
     for i, token in enumerate(tokens):
@@ -539,7 +554,6 @@ def question_builder(sentence, noun, pronoun):
         if match:
             response = random.choice(responses)
             print(response)
-            # add_on = random.choice([[reflect(g) for g in match.groups()], noun])
             return response.format(*[reflect(g) for g in match.groups()])
 
 
@@ -550,10 +564,6 @@ def analyze_input(sentence):
     textBlobSentence = TextBlob(cleaned_up_sentence)
 
     pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
-    print(pronoun)
-    print(noun)
-    print(adjective)
-    print(verb)
 
     response = check_for_danger_words(textBlobSentence)
     if response:
@@ -590,11 +600,6 @@ def analyze_input(sentence):
         print(previous_responses)
         return response
 
-    # if noun is None:
-    #     previous_responses.append("unclear")
-    #     previous_responses.popleft()
-    #     return unclear()
-
     response = question_builder(cleaned_up_sentence, noun, pronoun)
     if response:
         previous_responses.append("question")
@@ -613,7 +618,6 @@ def analyze_input(sentence):
         print(previous_responses)
         return random.choice(UNCLEAR_RESPONSES)
 
-""" refactor to make a build response method ??"""
 
 def send_message(sentence, channel):
     response = analyze_input(sentence)

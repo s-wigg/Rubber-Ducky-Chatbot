@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eux
-printenv
+#printenv
 cd /opt/ducky
 # source venv/bin/activate
 

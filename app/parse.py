@@ -549,7 +549,7 @@ def question_builder(sentence, noun, pronoun):
     logger.info("in question_builder")
     for pattern, responses in cs_babble:
         print(pattern)
-        match = re.match(pattern, sentence)
+        match = re.match(pattern, sentence, re.IGNORECASE)
         print(match)
         if match:
             response = random.choice(responses)

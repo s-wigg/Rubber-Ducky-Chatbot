@@ -151,8 +151,8 @@ def check_for_end_convo(sentence):
 def sentiment_analysis(sentence):
     logger.info(sentence.sentiment)
     logger.info(previous_responses)
-    if ((sentence.sentiment.polarity < -0.1)
-    and (sentence.sentiment.subjectivity > 0.3)
+    if ((sentence.sentiment.polarity < -0.4)
+    and (sentence.sentiment.subjectivity > 0.4)
     and (previous_responses[-1] != "encouragement")):
         return random.choice(ENCOURAGEMENT)
     else:
@@ -477,9 +477,7 @@ cs_babble = [
 
     [r'(.*)computer(.*)',
      ["Is it a hardware issue?",
-      "Have you tried restarting it to fix {0}?",
-      "Tell me more about {0}?",
-      "Tell me about what the issue is with {0}?"]],
+      "Have you tried restarting it to fix {0}?"]],
 
     [r'Is it (.*)',
      ["Do you think it is {0}?",
@@ -554,7 +552,10 @@ def question_builder(sentence, noun, pronoun):
         if match:
             response = random.choice(responses)
             print(response)
-            return response.format(*[reflect(g) for g in match.groups()])
+            print(match.groups())
+            return response.format(*[reflect(match.groups()[1]
+                                   if match.groups()[1]
+                                   else match.groups()[0])])
 
 
 # check what kind of input and what kind of message should be returned

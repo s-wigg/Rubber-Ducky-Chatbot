@@ -12,8 +12,9 @@ It's 2am and you've hit a roadblock in your code. What the Duck are you supposed
 5. Once you're running ngrok in a terminal window, copy and paste the forwarding URL into the [Slack Outgoing Webhooks page](https://api.slack.com/custom-integrations/outgoing-webhooks) on the 'outgoing webhook integration' line.
 6. On the Slack Outgoing Webhooks page, scroll down to the Integration Settings section. Select “#general” (or whatever channel(s) you want to use Ducky in) as the channel to listen on. Copy your ngrok Forwarding URL plus “/slack” into the URL(s) text box. Copy the generated Token. Scroll down and press the “Save Settings” button.
 7. In the command line type: `export SLACK_OUTGOING_WEBHOOK_SECRET='your-copied-token'`
-8. `flask run`
-9. Invite Ducky into the channel(s) you designated on the Slack Outgoing Webhooks page. Ducky will respond to any message in that channel, so it's recommended to create a separate channel for those
+8. `pip install -r requirements.txt`
+9. `flask run`
+10. Invite Ducky into the channel(s) you designated on the Slack Outgoing Webhooks page. Ducky will respond to any message in that channel, so it's recommended to create a separate channel for those
 
 I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) so that you are running in a clean environment.
 
@@ -32,7 +33,7 @@ I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virt
 * [python-slackclient](http://python-slackclient.readthedocs.io/en/latest/)
 * [ngrok](https://ngrok.com/docs)
 
-##### Thank Yous
+#### Thank Yous
 The following tutorials were particularly helpful in the development of this project:
 
 * [Brobot by Liza Daly](https://apps.worldwritable.com/tutorials/chatbot/)

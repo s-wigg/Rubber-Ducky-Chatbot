@@ -32,7 +32,7 @@ I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virt
 * [python-slackclient](http://python-slackclient.readthedocs.io/en/latest/)
 * [ngrok](https://ngrok.com/docs)
 
-# Thank Yous
+##### Thank Yous
 The following tutorials were particularly helpful in the development of this project:
 
 * [Brobot by Liza Daly](https://apps.worldwritable.com/tutorials/chatbot/)

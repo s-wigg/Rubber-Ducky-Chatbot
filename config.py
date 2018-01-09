@@ -9,10 +9,11 @@ logger.info("In config file")
 class Config(object):
     SLACK_TOKEN = os.environ.get('SLACK_TOKEN') or 'none'
 
-    # BOT_ID = os.environ.get("BOT_ID") or 'none'
-    # SLACK_CHANNEL = os.environ.get("SLACK_CHANNEL")
-
     SLACK_OUTGOING_WEBHOOK_SECRET = os.environ.get('SLACK_OUTGOING_WEBHOOK_SECRET')
+
+    CSE_ID = os.environ.get('CSE_ID')
+
+    GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 
     OFFENSIVE_WORDS = set([
         "skank",

@@ -7,6 +7,8 @@ import logging
 import re
 from collections import deque
 import random
+import pprint
+from googleapiclient.discovery import build
 
 logging.basicConfig()
 logger = logging.getLogger()
@@ -16,7 +18,6 @@ if not app.config['SLACK_TOKEN']:
     raise Exception("NO SLACK TOKEN")
 
 slack_client = SlackClient(app.config['SLACK_TOKEN'])
-logger.info(slack_client)
 
 previous_responses = deque([None, None, None])
 
@@ -264,6 +265,20 @@ def check_for_offensive(sentence):
 # if no noun identified and no special case matches
 def unclear():
     return random.choice(UNCLEAR_RESPONSES)
+
+
+def google_search(sentence):
+    service = build("customsearch", "v1",
+                    developerKey=app.config['GOOGLE_API_KEY'])
+
+    res = service.cse().list(
+        q=sentence,
+        cx=app.config['CSE_ID'],
+        ).execute()
+    if res['items']:
+        result = res['items'][0]
+    logger.info(result)
+    # pprint.pprint(res)
 
 
 reflections = {
@@ -565,6 +580,14 @@ def analyze_input(sentence):
     textBlobSentence = TextBlob(cleaned_up_sentence)
 
     pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
+
+    # this will need to move to more approp place eventually
+    response = google_search(textBlobSentence)
+    if response:
+        previous_responses.append("google")
+        previous_responses.popleft()
+        print(previous_responses)
+        # will need to return something eventually
 
     response = check_for_danger_words(textBlobSentence)
     if response:

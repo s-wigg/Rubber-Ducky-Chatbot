@@ -276,8 +276,9 @@ def google_search(sentence):
         cx=app.config['CSE_ID'],
         ).execute()
     if res['items']:
-        result = res['items'][0]
+        result = res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
     logger.info(result)
+    return result
     # pprint.pprint(res)
 
 
@@ -582,11 +583,12 @@ def analyze_input(sentence):
     pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
 
     # this will need to move to more approp place eventually
-    response = google_search(textBlobSentence)
+    response = google_search(cleaned_up_sentence)
     if response:
         previous_responses.append("google")
         previous_responses.popleft()
         print(previous_responses)
+        return response
         # will need to return something eventually
 
     response = check_for_danger_words(textBlobSentence)

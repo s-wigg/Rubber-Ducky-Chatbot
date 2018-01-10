@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template
 from app import app
 from app.parse import send_message
 # from config import Config
@@ -30,7 +30,8 @@ def inbound():
 
 @app.route('/', methods=['GET'])
 def test():
-    return Response('It works!')
+    # return Response('Hi!! Rubber Ducky isn\'t here right now. Ducky lives in Slack...)
+     return render_template('home.html')
 
 
 if __name__ == "__main__":

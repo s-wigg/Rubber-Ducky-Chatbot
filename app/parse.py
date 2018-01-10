@@ -266,21 +266,27 @@ def check_for_offensive(sentence):
 def unclear():
     return random.choice(UNCLEAR_RESPONSES)
 
+
 DUCKY_GOOGLE = "Ducky googled Stack Overflow for you! Maybe this will help?"
 
-def google_search(sentence):
-    service = build("customsearch", "v1",
-                    developerKey=app.config['GOOGLE_API_KEY'])
 
-    res = service.cse().list(
-        q=sentence,
-        cx=app.config['CSE_ID'],
-        ).execute()
-    if res['items']:
-        result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
-    logger.info(result)
-    return result
-    # pprint.pprint(res)
+def google_search(sentence):
+    logger.info(previous_responses[-1] == "question")
+    logger.info(len(sentence.split()))
+    if (previous_responses[-1] == "question") or (len(sentence.split()) >= 3):
+        service = build("customsearch", "v1",
+                        developerKey=app.config['GOOGLE_API_KEY'])
+
+        res = service.cse().list(
+            q=sentence,
+            cx=app.config['CSE_ID'],
+            ).execute()
+        if res['items']:
+            result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
+        logger.info(result)
+        return result
+    else:
+        return None
 
 
 reflections = {
@@ -583,15 +589,6 @@ def analyze_input(sentence):
 
     pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
 
-    # this will need to move to more approp place eventually
-    response = google_search(cleaned_up_sentence)
-    if response:
-        previous_responses.append("google")
-        previous_responses.popleft()
-        print(previous_responses)
-        return response
-        # will need to return something eventually
-
     response = check_for_danger_words(textBlobSentence)
     if response:
         previous_responses.append("danger")
@@ -623,6 +620,13 @@ def analyze_input(sentence):
     response = sentiment_analysis(textBlobSentence)
     if response:
         previous_responses.append("encouragement")
+        previous_responses.popleft()
+        print(previous_responses)
+        return response
+
+    response = google_search(cleaned_up_sentence)
+    if response:
+        previous_responses.append("google")
         previous_responses.popleft()
         print(previous_responses)
         return response

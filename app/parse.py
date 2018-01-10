@@ -266,6 +266,7 @@ def check_for_offensive(sentence):
 def unclear():
     return random.choice(UNCLEAR_RESPONSES)
 
+DUCKY_GOOGLE = "Ducky googled Stack Overflow for you! Maybe this will help?"
 
 def google_search(sentence):
     service = build("customsearch", "v1",
@@ -276,7 +277,7 @@ def google_search(sentence):
         cx=app.config['CSE_ID'],
         ).execute()
     if res['items']:
-        result = res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
+        result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
     logger.info(result)
     return result
     # pprint.pprint(res)

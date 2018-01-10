@@ -95,3 +95,9 @@ def test_api_response_ok_false_bad_channel():
             as_user=True
             )
     assert resp["ok"] == False
+
+# def test_google_search():
+#     """The bot should respond to questions about itself"""
+#     sent = "python ternary operator?"
+#     resp = analyze_input(sent)
+#     assert resp == "Stack Overflow"

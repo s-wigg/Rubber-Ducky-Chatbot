@@ -69,7 +69,7 @@ def test_question_builder():
 def test_question_builder2():
     """The bot should respond appropriately when key word/phrases are used"""
     resp = analyze_input("mad mad")
-    sent = "I need help with fatal token error"
+    sent = "I'm having a fatal token error"
     resp = analyze_input(sent)
     assert resp == cs_babble[10][1][2]
 

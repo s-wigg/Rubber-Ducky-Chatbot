@@ -122,173 +122,6 @@ PRIMARY_OFFENSIVE = [
     "Would you talk like that in front of your parents?"
 ]
 
-
-def check_for_danger_words(sentence):
-    sentence_split = sentence.split(' ')
-    for word in sentence_split:
-        for w in app.config['DANGER_WORDS']:
-            if word.lower().startswith(w):
-                return random.choice(DANGER_RESPONSE)
-
-
-def check_for_greeting(sentence):
-    """If user's input was a greeting, return a greeting response"""
-    logger.info("IN Check for greeting")
-    for word in sentence.words:
-        if word.lower() in GREETING_KEYWORDS:
-            return random.choice(GREETING_RESPONSES)
-        else:
-            return None
-
-
-def check_for_end_convo(sentence):
-    for word in sentence.words:
-        if word.lower() in END_KEYWORDS:
-            return random.choice(END_RESPONSES)
-        else:
-            return None
-
-
-def sentiment_analysis(sentence):
-    logger.info(sentence.sentiment)
-    logger.info(previous_responses)
-    if ((sentence.sentiment.polarity < -0.4)
-    and (sentence.sentiment.subjectivity > 0.4)
-    and (previous_responses[-1] != "encouragement")):
-        return random.choice(ENCOURAGEMENT)
-    else:
-        return None
-
-
-def find_pronoun(sent):
-    """Given a sentence, find a preferred pronoun.
-    Returns None if no candidate pronoun found"""
-    pronoun = None
-
-    for word, part_of_speech in sent.pos_tags:
-        # Disambiguate pronouns
-        if part_of_speech == 'PRP' and word.lower() == 'you':
-            pronoun = 'I'
-        elif part_of_speech == 'PRP' and word == 'I':
-            # If the user mentioned themselves,
-            # then they will definitely be the pronoun
-            pronoun = 'You'
-    return pronoun
-
-
-def find_verb(sent):
-    """Pick a candidate verb for the sentence."""
-    verb = None
-    for word, part_of_speech in sent.pos_tags:
-        if part_of_speech.startswith('VB'):  # This is a verb
-            verb = word
-            break
-    return verb
-
-
-def find_noun(sent):
-    """Given a sentence, find the best candidate noun."""
-    noun = None
-
-    if not noun:
-        for w, p in sent.pos_tags:
-            if p == 'NN':  # This is a noun
-                noun = w
-                break
-    return noun
-
-
-def find_adjective(sent):
-    """Given a sentence, find the best candidate adjective."""
-    adj = None
-    for w, p in sent.pos_tags:
-        if p == 'JJ':  # This is an adjective
-            adj = w
-            break
-    return adj
-
-
-def find_parts_of_speech(sentence):
-    """Given a parsed input, find the best pronoun, direct noun,
-    adjective, and verb to match their input.
-    Returns a tuple of pronoun, noun, adjective,
-    verb any of which may be None if there was no good match"""
-    pronoun = None
-    noun = None
-    adjective = None
-    verb = None
-    for sent in sentence.sentences:
-        pronoun = find_pronoun(sent)
-        noun = find_noun(sent)
-        adjective = find_adjective(sent)
-        verb = find_verb(sent)
-    return pronoun, noun, adjective, verb
-
-
-def about_self(sentence, pronoun):
-    if ("?" in sentence) and (pronoun == "I" or "your" in sentence):
-        return random.choice(COMMENTS_ABOUT_SELF)
-
-
-def preprocess_text(sentence):
-    """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
-    to be correctly identified as a pronoun"""
-    cleaned = []
-    words = sentence.split(' ')
-    for w in words:
-        if w == 'i':
-            w = 'I'
-        if w == "i'm":
-            w = "I am"
-        if w == "im":
-            w = "I am"
-        if '@' in w:
-            w = w.replace("@", "")
-        if '#' in w:
-            w = w.replace("#", "")
-        cleaned.append(w)
-
-    return ' '.join(cleaned)
-
-
-def check_for_offensive(sentence):
-    logger.info("In offensive check")
-    sentence_split = sentence.split(' ')
-    for word in sentence_split:
-        for w in app.config['OFFENSIVE_WORDS']:
-            if word.lower().startswith(w):
-                return random.choice(PRIMARY_OFFENSIVE)
-
-    return None
-
-
-# if no noun identified and no special case matches
-def unclear():
-    return random.choice(UNCLEAR_RESPONSES)
-
-
-DUCKY_GOOGLE = "Ducky googled Stack Overflow for you! Maybe this will help?"
-
-
-def google_search(sentence):
-    logger.info(previous_responses[-1] == "question")
-    logger.info(len(sentence.split()))
-    if (previous_responses[-1] == "question") or (len(sentence.split()) >= 3):
-        service = build("customsearch", "v1",
-                        developerKey=app.config['GOOGLE_API_KEY'])
-
-        res = service.cse().list(
-            q=sentence,
-            cx=app.config['CSE_ID'],
-            ).execute()
-        if res['items']:
-            result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
-        logger.info(result)
-        return result
-    else:
-        return None
-
-
 reflections = {
     "am": "are",
     "was": "were",
@@ -337,8 +170,8 @@ cs_babble = [
     [r'(.*)javascript(.*)',
      ["Java is to javascript as car is to carpet.",
       "Is it an ansynchoronos problem?",
-      "What is this?",
-      "But really, what is this?",
+      "What is 'this'?",
+      "But really, what is 'this'?",
       "Could jQuery fix it?",
       "Are you missing a semicolon?",
       "Sometimes Ducky feels like a fatal token too."]],
@@ -556,6 +389,168 @@ cs_babble = [
       "How would it work if it {0}?",
       "If you got {0}, then what would you do?"]]
 ]
+
+DUCKY_GOOGLE = "Ducky googled Stack Overflow for you! Maybe this will help?"
+
+def check_for_danger_words(sentence):
+    sentence_split = sentence.split(' ')
+    for word in sentence_split:
+        for w in app.config['DANGER_WORDS']:
+            if word.lower().startswith(w):
+                return random.choice(DANGER_RESPONSE)
+
+
+def check_for_greeting(sentence):
+    """If user's input was a greeting, return a greeting response"""
+    logger.info("IN Check for greeting")
+    for word in sentence.words:
+        if word.lower() in GREETING_KEYWORDS:
+            return random.choice(GREETING_RESPONSES)
+        else:
+            return None
+
+
+def check_for_end_convo(sentence):
+    for word in sentence.words:
+        if word.lower() in END_KEYWORDS:
+            return random.choice(END_RESPONSES)
+        else:
+            return None
+
+
+def sentiment_analysis(sentence):
+    logger.info(sentence.sentiment)
+    logger.info(previous_responses)
+    if ((sentence.sentiment.polarity < -0.4)
+    and (sentence.sentiment.subjectivity > 0.4)
+    and (previous_responses[-1] != "encouragement")):
+        return random.choice(ENCOURAGEMENT)
+    else:
+        return None
+
+
+def find_pronoun(sent):
+    """Given a sentence, find a preferred pronoun.
+    Returns None if no candidate pronoun found"""
+    pronoun = None
+
+    for word, part_of_speech in sent.pos_tags:
+        # Disambiguate pronouns
+        if part_of_speech == 'PRP' and word.lower() == 'you':
+            pronoun = 'I'
+        elif part_of_speech == 'PRP' and word == 'I':
+            # If the user mentioned themselves,
+            # then they will definitely be the pronoun
+            pronoun = 'You'
+    return pronoun
+
+
+def find_verb(sent):
+    """Pick a candidate verb for the sentence."""
+    verb = None
+    for word, part_of_speech in sent.pos_tags:
+        if part_of_speech.startswith('VB'):  # This is a verb
+            verb = word
+            break
+    return verb
+
+
+def find_noun(sent):
+    """Given a sentence, find the best candidate noun."""
+    noun = None
+
+    if not noun:
+        for w, p in sent.pos_tags:
+            if p == 'NN':  # This is a noun
+                noun = w
+                break
+    return noun
+
+
+def find_adjective(sent):
+    """Given a sentence, find the best candidate adjective."""
+    adj = None
+    for w, p in sent.pos_tags:
+        if p == 'JJ':  # This is an adjective
+            adj = w
+            break
+    return adj
+
+
+def find_parts_of_speech(sentence):
+    """Given a parsed input, find the best pronoun, direct noun,
+    adjective, and verb to match their input.
+    Returns a tuple of pronoun, noun, adjective,
+    verb any of which may be None if there was no good match"""
+    pronoun = None
+    noun = None
+    adjective = None
+    verb = None
+    for sent in sentence.sentences:
+        pronoun = find_pronoun(sent)
+        noun = find_noun(sent)
+        adjective = find_adjective(sent)
+        verb = find_verb(sent)
+    return pronoun, noun, adjective, verb
+
+
+def about_self(sentence, pronoun):
+    if ("?" in sentence) and (pronoun == "I" or "your" in sentence):
+        return random.choice(COMMENTS_ABOUT_SELF)
+
+
+def preprocess_text(sentence):
+    """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
+    to be correctly identified as a pronoun"""
+    cleaned = []
+    words = sentence.split(' ')
+    for w in words:
+        if w == 'i':
+            w = 'I'
+        if w == "i'm":
+            w = "I am"
+        if w == "im":
+            w = "I am"
+        if '@' in w:
+            w = w.replace("@", "")
+        if '#' in w:
+            w = w.replace("#", "")
+        cleaned.append(w)
+
+    return ' '.join(cleaned)
+
+
+def check_for_offensive(sentence):
+    logger.info("In offensive check")
+    sentence_split = sentence.split(' ')
+    for word in sentence_split:
+        for w in app.config['OFFENSIVE_WORDS']:
+            if word.lower().startswith(w):
+                return random.choice(PRIMARY_OFFENSIVE)
+
+    return None
+
+
+# if no noun identified and no special case matches
+def unclear():
+    return random.choice(UNCLEAR_RESPONSES)
+
+
+def google_search(sentence):
+    if (previous_responses[-1] == "question" and previous_responses[-1] != "google") and (len(sentence.split()) >= 3):
+        service = build("customsearch", "v1",
+                        developerKey=app.config['GOOGLE_API_KEY'])
+
+        res = service.cse().list(
+            q=sentence,
+            cx=app.config['CSE_ID'],
+            ).execute()
+        if res['items']:
+            result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
+        logger.info(result)
+        return result
+    else:
+        return None
 
 
 def reflect(fragment):

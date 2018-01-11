@@ -12,11 +12,13 @@ from parse import *
 
 random.seed(0)
 
+
 def test_basic_greetings():
     """The bot should respond sensibly to common greeting words"""
     sent = "hello"
     resp = analyze_input(sent)
     assert resp == GREETING_RESPONSES[3]
+
 
 def test_basic_end_convo():
     """The bot should respond sensibly to common end of convo words"""
@@ -24,11 +26,13 @@ def test_basic_end_convo():
     resp = analyze_input(sent)
     assert resp == END_RESPONSES[6]
 
+
 def test_offensive_words():
     """The bot should respond appropriately to offensive words"""
     sent = "test1234"
     resp = analyze_input(sent)
     assert resp == PRIMARY_OFFENSIVE[0]
+
 
 def test_danger_words():
     """The bot should respond sensitively to danger words"""
@@ -42,14 +46,14 @@ def test_encouragement():
     resp = analyze_input(sent)
     assert resp == ENCOURAGEMENT[-1]
 
+
 def test_encouragement_not_repeated():
     """The bot should not offer encouragement twice in a row"""
-    sent = "mad mad mad"
-    # analyze_input(sent)
-    print("IN TEST")
+    sent = "mad mad"
     resp = analyze_input(sent)
     print(previous_responses)
     assert resp not in ENCOURAGEMENT
+
 
 def test_unclear():
     """The bot should ask clarifying question/noncommital statement if userinput can't be parsed"""
@@ -57,35 +61,49 @@ def test_unclear():
     resp = analyze_input(sent)
     assert resp == UNCLEAR_RESPONSES[3]
 
+
 def test_question_builder():
     """The bot should respond appropriately when key word/phrases are used"""
     sent = "What are some good python resources"
     resp = analyze_input(sent)
-    assert resp == cs_babble[12][1][2]
+    assert resp == cs_babble[13][1][2]
+
 
 def test_question_builder2():
     """The bot should respond appropriately when key word/phrases are used"""
+    resp = analyze_input("mad mad")
     sent = "I need help with fatal token error"
     resp = analyze_input(sent)
-    assert resp == cs_babble[9][1][3]
+    assert resp == cs_babble[10][1][2]
+
 
 def test_question_builder3():
     """The bot should respond appropriately when key word/phrases are used"""
+    resp = analyze_input("mad mad")
     sent = "Can you whiteboard?"
     resp = analyze_input(sent)
-    assert resp == cs_babble[2][1][2]
+    assert resp == cs_babble[3][1][1]
+
+def test_google_search():
+    """The bot should respond with link from Stack Overflow when relevant conditions are met"""
+    sent = "python ternary operator?"
+    resp = analyze_input(sent)
+    assert resp == "Ducky googled Stack Overflow for you! Maybe this will help?\nDoes Python have a ternary conditional operator? - Stack Overflow\n<https://stackoverflow.com/q/394809>"
+
 
 def test_about_self():
     """The bot should respond to questions about itself"""
+    # resp = analyze_input("mad mad")
     sent = "How are you?"
     resp = analyze_input(sent)
-    assert resp == COMMENTS_ABOUT_SELF[-1]
+    assert resp == COMMENTS_ABOUT_SELF[4]
 
 
 def test_api_test():
     resp = slack_client.api_call("auth.test")
     assert resp["ok"] == True
     assert resp['user'] == 'ducky'
+
 
 def test_api_response_ok_false_bad_channel():
     resp = slack_client.api_call(
@@ -95,9 +113,3 @@ def test_api_response_ok_false_bad_channel():
             as_user=True
             )
     assert resp["ok"] == False
-
-# def test_google_search():
-#     """The bot should respond to questions about itself"""
-#     sent = "python ternary operator?"
-#     resp = analyze_input(sent)
-#     assert resp == "Stack Overflow"

@@ -1,9 +1,3 @@
 {
-  "test_parse.py::test_about_self": true,
-  "test_parse.py::test_encouragement_not_repeated": true,
-  "test_parse.py::test_google_search": true,
-  "test_parse.py::test_question_builder": true,
-  "test_parse.py::test_question_builder2": true,
-  "test_parse.py::test_question_builder3": true,
   "test_parse.py::test_response_directly": true
 }

@@ -84,6 +84,7 @@ def test_question_builder3():
     resp = analyze_input(sent)
     assert resp == cs_babble[3][1][1]
 
+
 def test_google_search():
     """The bot should respond with link from Stack Overflow when relevant conditions are met"""
     sent = "python ternary operator?"
@@ -91,12 +92,18 @@ def test_google_search():
     assert resp == "Ducky googled Stack Overflow for you! Maybe this will help?\nDoes Python have a ternary conditional operator? - Stack Overflow\n<https://stackoverflow.com/q/394809>"
 
 
+def test_google_search2():
+    """Won't return google search twice in a row"""
+    print(previous_responses)
+    sent = "python ternary operator?"
+    resp = analyze_input(sent)
+    assert resp == cs_babble[13][1][2]
+
 def test_about_self():
     """The bot should respond to questions about itself"""
-    # resp = analyze_input("mad mad")
-    sent = "How are you?"
+    sent = "How are you ducky?"
     resp = analyze_input(sent)
-    assert resp == COMMENTS_ABOUT_SELF[4]
+    assert resp == COMMENTS_ABOUT_SELF[2]
 
 
 def test_api_test():

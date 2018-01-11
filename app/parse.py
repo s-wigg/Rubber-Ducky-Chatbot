@@ -495,7 +495,10 @@ def find_parts_of_speech(sentence):
 
 
 def about_self(sentence, pronoun):
-    if ("?" in sentence) and (pronoun == "I" or "your" in sentence):
+    if (
+         ("?" in sentence and "ducky" in sentence) and
+         (pronoun == "I" or "your" in sentence) and
+         (previous_responses[-1] != "about ducky")):
         return random.choice(COMMENTS_ABOUT_SELF)
 
 
@@ -537,7 +540,7 @@ def unclear():
 
 
 def google_search(sentence):
-    if (previous_responses[-1] == "question" and previous_responses[-1] != "google") and (len(sentence.split()) >= 3):
+    if (previous_responses[-1] == "question" and previous_responses[-1] != "google" and "?" in sentence) and (len(sentence.split()) >= 3):
         service = build("customsearch", "v1",
                         developerKey=app.config['GOOGLE_API_KEY'])
 
@@ -619,6 +622,13 @@ def analyze_input(sentence):
         print(previous_responses)
         return response
 
+    response = about_self(textBlobSentence, pronoun)
+    if response:
+        previous_responses.append("about ducky")
+        previous_responses.popleft()
+        print(previous_responses)
+        return response
+        
     response = google_search(cleaned_up_sentence)
     if response:
         previous_responses.append("google")
@@ -630,13 +640,6 @@ def analyze_input(sentence):
     if response:
         previous_responses.append("question")
         previous_responses.popleft()
-        return response
-
-    response = about_self(textBlobSentence, pronoun)
-    if response:
-        previous_responses.append("about ducky")
-        previous_responses.popleft()
-        print(previous_responses)
         return response
     else:
         previous_responses.append("unclear")

@@ -269,7 +269,7 @@ cs_babble = [
 
     [r'no (.*)',
     ["I'm sorry that wasn't helpful! What else can I try?"]],
-    
+
     [r'I need help (.*)',
      ["Who can help you with {0}?",
       "Can the internet help you with {0}?",
@@ -504,6 +504,21 @@ def about_self(sentence, pronoun):
          (previous_responses[-1] != "about ducky")):
         return random.choice(COMMENTS_ABOUT_SELF)
 
+def google_help_helper(sentence):
+    """Will return google result based either on explicit command OR based on user input and previous bot responses"""
+    terms = ["help", "google", "documentation", "show me"]
+    clarified_sentence = None
+    for word in terms:
+        if word in sentence:
+            # word google likely not intended to be included in the query
+            clarified_sentence = sentence.strip("google")
+            print("CLARIFIED SENTENCE")
+            print(clarified_sentence)
+
+    if clarified_sentence:
+        return google_search(clarified_sentence)
+    elif ((previous_responses[-1] == "question" and previous_responses[-1] != "google" and "?" in sentence) and (len(sentence.split()) >= 3)):
+        return google_search(sentence)
 
 def preprocess_text(sentence):
     """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
@@ -543,7 +558,6 @@ def unclear():
 
 
 def google_search(sentence):
-    if (previous_responses[-1] == "question" and previous_responses[-1] != "google" and "?" in sentence) and (len(sentence.split()) >= 3):
         service = build("customsearch", "v1",
                         developerKey=app.config['GOOGLE_API_KEY'])
 
@@ -555,8 +569,8 @@ def google_search(sentence):
             result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
         logger.info(result)
         return result
-    else:
-        return None
+    # else:
+    #     return None
 
 
 def reflect(fragment):
@@ -632,7 +646,7 @@ def analyze_input(sentence):
         print(previous_responses)
         return response
 
-    response = google_search(cleaned_up_sentence)
+    response = google_help_helper(cleaned_up_sentence)
     if response:
         previous_responses.append("google")
         previous_responses.popleft()

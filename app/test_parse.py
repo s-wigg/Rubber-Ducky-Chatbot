@@ -1,9 +1,6 @@
-import sys
 import json
-
 import random
 import pytest
-from pytest import fixture
 from flask import Flask
 from six import b
 
@@ -98,6 +95,7 @@ def test_google_search2():
     sent = "python ternary operator?"
     resp = analyze_input(sent)
     assert resp == cs_babble[13][1][2]
+
 
 def test_about_self():
     """The bot should respond to questions about itself"""

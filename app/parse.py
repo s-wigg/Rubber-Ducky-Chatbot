@@ -267,6 +267,9 @@ cs_babble = [
       "You shouldn't quit, but sometimes a break can help.",
       "Maybe a break will give you some fresh perspective?"]],
 
+    [r'no (.*)',
+    ["I'm sorry that wasn't helpful! What else can I try?"]],
+    
     [r'I need help (.*)',
      ["Who can help you with {0}?",
       "Can the internet help you with {0}?",
@@ -628,7 +631,7 @@ def analyze_input(sentence):
         previous_responses.popleft()
         print(previous_responses)
         return response
-        
+
     response = google_search(cleaned_up_sentence)
     if response:
         previous_responses.append("google")

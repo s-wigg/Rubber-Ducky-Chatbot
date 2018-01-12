@@ -1,7 +1,7 @@
 language: python
 python:
   - "3.6"
-  - "nightly"
+  # - "nightly"
 # command to install dependencies
 install:
   # - sudo pip install -U nltk

@@ -97,16 +97,7 @@ DANGER_RESPONSE = [
 
 # If the user says something about duckybot
 COMMENTS_ABOUT_SELF = [
-    "I am just a Rubber Duck so I have many limitations",
-    "I prefer stale bread, but maybe you'd like a cup of tea?",
-    "I am open to the abundance of the universe.",
-    "Where I am right now is exactly where I need to be.",
-    "I honor the light in you.",
-    "Everything I need is within me",
-    "My favorite color is sunflower yellow. Why do you ask?",
-    "My favorite language is Python (but real snakes scare me!)",
-    "I'm just ducky! Thanks for asking.",
-    "I'm too shy for selfies!"
+    "<:rubberduck:>" + "I am just a Rubber Duck so I have many limitations"
 ]
 
 PRIMARY_OFFENSIVE = [

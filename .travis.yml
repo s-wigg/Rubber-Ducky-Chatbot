@@ -5,6 +5,7 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - sudo mv nltk_data /usr/share/nltk_data
 # command to run tests
 script:
   - cd app

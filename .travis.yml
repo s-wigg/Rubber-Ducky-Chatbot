@@ -6,7 +6,8 @@ python:
 install:
   # - sudo pip install -U nltk
   - pip install -r requirements.txt
-  - python script_travis.py
+  - python -m nltk.downloader all
+  # - python script_travis.py
 # command to run tests
 script:
   - cd app

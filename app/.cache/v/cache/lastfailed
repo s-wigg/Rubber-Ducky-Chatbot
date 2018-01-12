@@ -1,4 +1,3 @@
 {
-  "test_parse.py": true,
   "test_parse.py::test_response_directly": true
 }

@@ -86,7 +86,7 @@ def test_google_search():
     """The bot should respond with link from Stack Overflow when relevant conditions are met"""
     sent = "python ternary operator?"
     resp = analyze_input(sent)
-    assert resp == "Ducky googled Stack Overflow for you! Maybe this will help?\nDoes Python have a ternary conditional operator? - Stack Overflow\n<https://stackoverflow.com/q/394809>"
+    assert resp[0:153] == "Ducky googled Stack Overflow for you! Maybe this will help?\nDoes Python have a ternary conditional operator? - Stack Overflow\n<https://stackoverflow.com/"
 
 
 def test_google_search2():

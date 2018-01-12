@@ -4,9 +4,9 @@ python:
   - "nightly"
 # command to install dependencies
 install:
-  - sudo pip install -U nltk
-  - nltk.download()
+  # - sudo pip install -U nltk
   - pip install -r requirements.txt
+  - python -c 'import nltk' -c 'nltk.download("punkt")'
 # command to run tests
 script:
   - cd app

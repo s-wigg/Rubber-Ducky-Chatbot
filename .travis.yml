@@ -4,7 +4,8 @@ python:
   - "nightly"
 # command to install dependencies
 install:
-  - nltk.download('punkt')
+  - sudo pip install -U nltk
+  - nltk.download()
   - pip install -r requirements.txt
 # command to run tests
 script:

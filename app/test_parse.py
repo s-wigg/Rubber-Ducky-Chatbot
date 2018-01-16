@@ -3,7 +3,7 @@ import random
 import pytest
 from flask import Flask
 from six import b
-
+import vcr
 from app import app
 from parse import *
 
@@ -104,12 +104,14 @@ def test_about_self():
     assert resp == COMMENTS_ABOUT_SELF[2]
 
 
+@vcr.use_cassette()
 def test_api_test():
     resp = slack_client.api_call("auth.test")
     assert resp["ok"] == True
     assert resp['user'] == 'ducky'
 
 
+@vcr.use_cassette()
 def test_api_response_ok_false_bad_channel():
     resp = slack_client.api_call(
             "chat.postMessage",

@@ -1,13 +1,11 @@
 import json
 import random
 import pytest
-# import urllib3
 import requests
 import logging
 
 from flask import Flask, request
 from six import b
-# import vcr
 from app import app
 from parse import *
 

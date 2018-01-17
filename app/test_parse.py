@@ -109,20 +109,20 @@ def test_about_self():
 
 
 # @vcr.use_cassette('fixtures/vcr_cassettes/test_parse.yml')
-# def test_api_test():
-#     # with vcr.use_cassette('test_parse.yml'):
-#     resp = slack_client.api_call("auth.test")
-#     assert resp["ok"] == True
-#     assert resp['user'] == 'ducky'
-#
-#
+def test_api_test():
+    # with vcr.use_cassette('test_parse.yml'):
+    resp = slack_client.api_call("auth.test")
+    assert resp["ok"] == True
+    assert resp['user'] == 'ducky'
+
+
 # @vcr.use_cassette('fixtures/vcr_cassettes/test_parse.yml')
-# def test_api_response_ok_false_bad_channel():
-#     # with vcr.use_cassette('test_parse.yml'):
-#     resp = slack_client.api_call(
-#                 "chat.postMessage",
-#                 channel='U1234',
-#                 text="hi",
-#                 as_user=True
-#                 )
-#     assert resp["ok"] == False
+def test_api_response_ok_false_bad_channel():
+    # with vcr.use_cassette('test_parse.yml'):
+    resp = slack_client.api_call(
+                "chat.postMessage",
+                channel='U1234',
+                text="hi",
+                as_user=True
+                )
+    assert resp["ok"] == False

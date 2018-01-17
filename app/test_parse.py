@@ -1,6 +1,10 @@
 import json
 import random
 import pytest
+import urllib3
+import requests
+import logging
+
 from flask import Flask, request
 from six import b
 import vcr
@@ -104,19 +108,21 @@ def test_about_self():
     assert resp == COMMENTS_ABOUT_SELF[2]
 
 
-@vcr.use_cassette('test_parse.yml')
+@vcr.use_cassette('fixtures/vcr_cassettes/test_parse.yml')
 def test_api_test():
+    # with vcr.use_cassette('test_parse.yml'):
     resp = slack_client.api_call("auth.test")
     assert resp["ok"] == True
     assert resp['user'] == 'ducky'
 
 
-@vcr.use_cassette('test_parse.yml')
+@vcr.use_cassette('fixtures/vcr_cassettes/test_parse.yml')
 def test_api_response_ok_false_bad_channel():
+    # with vcr.use_cassette('test_parse.yml'):
     resp = slack_client.api_call(
-            "chat.postMessage",
-            channel='U1234',
-            text="hi",
-            as_user=True
-            )
+                "chat.postMessage",
+                channel='U1234',
+                text="hi",
+                as_user=True
+                )
     assert resp["ok"] == False

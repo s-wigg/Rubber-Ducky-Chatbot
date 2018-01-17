@@ -16,12 +16,16 @@ It's 2am and you've hit a roadblock in your code. What the Duck are you supposed
 7. In the command line type: `export SLACK_OUTGOING_WEBHOOK_SECRET='your-copied-token'`
 8. Visit the Google APIs Console <https://console.developers.google.com/apis> to get an API key for your own application. In the command line type: `export GOOGLE_API_KEY='your-copied-token'`
 9. Google Custom Search ID from https://cse.google.com/cse. When set the custom search engine will be used instead of Google Web Search. In the command line type: `export CSE_ID='your-copied-token'`
-10. If deploying on AWS, environment variables can be set through the Elastic Bean console instead.
+10. If deploying on AWS, environment variables can be set through the Elastic Beanstalk console instead.
 11. `pip install -r requirements.txt`
 12. `flask run`
 13. Invite Ducky into the channel(s) you designated on the Slack Outgoing Webhooks page. Ducky will respond to any message in that channel, so it's recommended to create a separate channel for those
 
 I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) so that you are running in a clean environment.
+
+## Ducky Key Words
+* Using Ducky's name let's Ducky know you are asking them a question a personal question
+* Adding "google", "help", "documentation", or "show me" to your input will cause Ducky to return a link to a Stack Overflow answer
 
 ### Documentation
 

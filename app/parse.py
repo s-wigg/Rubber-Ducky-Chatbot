@@ -498,7 +498,6 @@ def find_parts_of_speech(sentence):
 def about_self(sentence, pronoun):
     if (
          ("?" in sentence and "ducky" in sentence) and
-         (pronoun == "I" or "your" in sentence) and
          (previous_responses[-1] != "about ducky")):
         return random.choice(COMMENTS_ABOUT_SELF)
 

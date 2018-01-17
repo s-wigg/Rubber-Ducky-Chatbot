@@ -93,5 +93,6 @@ class Config(object):
         "assault",
         "rape",
         "sexual assault",
-        "dangertest"
+        "dangertest",
+        "unsafe"
         ])

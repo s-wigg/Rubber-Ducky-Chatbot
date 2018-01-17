@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/s-wigg/Rubber-Ducky-Chatbot.svg?branch=master)](https://travis-ci.org/s-wigg/Rubber-Ducky-Chatbot)
+
 # What the Duck?! — Rubber Ducky Slack Chatbot
 
 ## Why do you need Ducky in your life?

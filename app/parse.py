@@ -7,7 +7,7 @@ import logging
 import re
 from collections import deque
 import random
-import pprint
+# import pprint
 from googleapiclient.discovery import build
 
 logging.basicConfig()

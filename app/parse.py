@@ -421,8 +421,8 @@ def check_for_end_convo(sentence):
 def sentiment_analysis(sentence):
     logger.info(sentence.sentiment)
     logger.info(previous_responses)
-    if ((sentence.sentiment.polarity < -0.4)
-    and (sentence.sentiment.subjectivity > 0.4)
+    if ((sentence.sentiment.polarity < -0.45)
+    and (sentence.sentiment.subjectivity < 0.3)
     and (previous_responses[-1] != "encouragement")):
         return random.choice(ENCOURAGEMENT)
     else:

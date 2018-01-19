@@ -41,7 +41,7 @@ def test_danger_words():
 
 def test_encouragement():
     """The bot should offer encouragement when user input sufficiently negative"""
-    sent = "mad mad mad"
+    sent = "I'm so frustrated!"
     resp = analyze_input(sent)
     assert resp == ENCOURAGEMENT[-1]
 
@@ -96,7 +96,7 @@ def test_google_search2():
     print(previous_responses)
     sent = "python ternary operator?"
     resp = analyze_input(sent)
-    assert resp == cs_babble[13][1][2]
+    assert resp == cs_babble[13][1][-1]
 
 
 def test_about_self():

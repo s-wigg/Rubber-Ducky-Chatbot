@@ -117,7 +117,7 @@ PRIMARY_OFFENSIVE = [
     "Let's try being nice",
     "Even if I'm a bot, you can still be nice to me.",
     "Is that the kind of language your family would want you to use?",
-    "Would you talk like that in front of your parents?"
+    "Ducky has inherinent bias just like everyone else, but Ducky is woke!"
 ]
 
 reflections = {
@@ -199,12 +199,11 @@ cs_babble = [
       "What's the error message say?",
       "Did you google the error message?"]],
 
-    [r'(.*)(strict|typed)(.*)',
-     ["Ducky wants to learn a strictly typed language.",
+    [r'(.*)(static|typed)(.*)',
+     ["Ducky wants to learn a statically typed language.",
       "I'm sorry your java is giving you trouble.",
       "Did you declare your variables properly?",
-      "Is it because it's immutable?",
-      "Do you think it's a memory leak?"]],
+      "Is it because it's immutable?"]],
 
     [r'(.*)error(.*)',
      ["Did you google that error?",
@@ -496,8 +495,10 @@ def find_parts_of_speech(sentence):
 
 
 def about_self(sentence, pronoun):
+    print(("?" in sentence and ("ducky" in sentence or "Ducky" in sentence)))
     if (
-         ("?" in sentence and "ducky" in sentence) and
+         ("?" in sentence and ("ducky" in sentence or "Ducky" in sentence)) or
+         (pronoun == "I" or "your" in sentence) and
          (previous_responses[-1] != "about ducky")):
         return random.choice(COMMENTS_ABOUT_SELF)
 
@@ -637,6 +638,9 @@ def analyze_input(sentence):
         return response
 
     response = about_self(textBlobSentence, pronoun)
+    print("In about self method")
+    print(response)
+
     if response:
         previous_responses.append("about ducky")
         previous_responses.popleft()

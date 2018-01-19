@@ -495,11 +495,9 @@ def find_parts_of_speech(sentence):
 
 
 def about_self(sentence, pronoun):
-    print(("?" in sentence and ("ducky" in sentence or "Ducky" in sentence)))
     if (
-         ("?" in sentence and ("ducky" in sentence or "Ducky" in sentence)) or
-         (pronoun == "I" or "your" in sentence) and
-         (previous_responses[-1] != "about ducky")):
+         ("?" in sentence and ("ducky" in sentence or "Ducky" in sentence) and
+          (previous_responses[-1] != "about ducky"))):
         return random.choice(COMMENTS_ABOUT_SELF)
 
 def google_help_helper(sentence):

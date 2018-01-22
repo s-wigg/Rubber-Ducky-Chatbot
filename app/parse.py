@@ -264,6 +264,9 @@ cs_babble = [
       "You shouldn't quit, but sometimes a break can help.",
       "Maybe a break will give you some fresh perspective?"]],
 
+    [r'my name is (.*)',
+    ["Hi, {0}! Nice to meet you! My name is Ducky."]],
+
     [r'no (.*)',
     ["I'm sorry that wasn't helpful! What else can I try?"]],
 

@@ -17,6 +17,7 @@ class Config(object):
 
     OFFENSIVE_WORDS = set([
         "skank",
+        "ass",
         "wetback",
         "bitch",
         "blow job",

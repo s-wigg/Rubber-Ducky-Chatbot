@@ -231,7 +231,7 @@ cs_babble = [
       "Did you google python and {0}?",
       "Do you like programming in python?"]],
 
-    [r'(.*)code(.*)',
+    [r'(.*)(code|coding|coder)(.*)',
      ["Tell me more about your code?",
       "Can you walk me through your code?",
       "Don't forget that coding is fun even when it's frustrating sometimes.",
@@ -322,8 +322,8 @@ cs_babble = [
       "But you're not sure {0}?",
       "How can you confirm your hypothesis?"]],
 
-    [r'(.*)friend (.*)',
-     ["Can your friend help?.",
+    [r'(.*)(friend|friends)(.*)',
+     ["Can your friend help?",
       "Phone a friend?",
       "Is Ducky your friend?"]],
 
@@ -588,10 +588,12 @@ def question_builder(sentence, noun, pronoun):
             response = random.choice(responses)
             print(response)
             print(match.groups())
-            return response.format(*[reflect(match.groups()[1]
-                                   if match.groups()[1]
-                                   else match.groups()[0])])
-
+            if (len(match.groups()) > 1):
+                return response.format(*[reflect(match.groups()[1]
+                                       if match.groups()[1]
+                                       else match.groups()[0])])
+            else:
+                return response.format(*[reflect(g) for g in match.groups()])
 
 def analyze_input(sentence):
     """check what kind of input and what kind of message should be returned"""
@@ -643,8 +645,6 @@ def analyze_input(sentence):
         return response
 
     response = about_self(textBlobSentence, pronoun)
-    print("In about self method")
-
     if response:
         previous_responses.append("about ducky")
         previous_responses.popleft()

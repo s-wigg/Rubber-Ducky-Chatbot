@@ -2,6 +2,9 @@
 
 # What the Duck?! — Rubber Ducky Slack Chatbot
 
+## Who or What is Ducky?
+Ducky is a domain specific Slack chatbot to help coders think through their coding challenges, but Ducky also seeks to address common ethical issues with bots such as discouraging abuse and responding appropriately to serious personal comments.
+
 ## Why do you need Ducky in your life?
 It's 2am and you've hit a roadblock in your code. What the Duck are you supposed to do? Rubber Ducky Slackbot to the rescue! Rubber Ducky can serve as a Rubber Duck for the purposes of thinking through your coding roadblocks. Rubber Ducky can ask you questions and provide links to relevant Stack Overflow questions based on your input. Rubber Ducky will help speed you to the epiphany you're looking for to solve your coding troubles!
 
@@ -24,9 +27,9 @@ It's 2am and you've hit a roadblock in your code. What the Duck are you supposed
 I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) so that you are running in a clean environment.
 
 ## Ducky Key Words
-* Using Ducky's name let's Ducky know you are asking them a question a personal question
-* Adding "google", "help", "documentation", or "show me" to your input will cause Ducky to return a link to a Stack Overflow answer
-* Writing "Ducky, markov chain me" or including the word "Shakespeare" in usr input will cause Ducky to generate a 100 word poem in the style of a Shakespeare Sonnet generated using a [Markov Chain](http://setosa.io/ev/markov-chains/).
+* Using Ducky's name let's Ducky know you are asking them a question a personal question.
+* Adding "google", "help", "documentation", or "show me" to your input will cause Ducky to return a link to a Stack Overflow answer.
+* Writing "Ducky, markov chain me" or including the word "Shakespeare" in user input will cause Ducky to generate a 100 word poem in the style of a Shakespeare Sonnet generated using a [Markov Chain](http://setosa.io/ev/markov-chains/).
 
 ### Documentation
 

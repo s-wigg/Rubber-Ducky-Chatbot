@@ -7,7 +7,7 @@ import logging
 import re
 from collections import deque
 import random
-# import pprint
+from app.markov_chain import markov_poem
 from googleapiclient.discovery import build
 
 logging.basicConfig()
@@ -500,6 +500,7 @@ def about_self(sentence, pronoun):
           (previous_responses[-1] != "about ducky"))):
         return random.choice(COMMENTS_ABOUT_SELF)
 
+
 def google_help_helper(sentence):
     """Will return google result based either on explicit command OR based on user input and previous bot responses"""
     terms = ["help", "google", "documentation", "show me"]
@@ -515,6 +516,7 @@ def google_help_helper(sentence):
         return google_search(clarified_sentence)
     elif ((previous_responses[-1] == "question" and previous_responses[-1] != "google" and "?" in sentence) and (len(sentence.split()) >= 3)):
         return google_search(sentence)
+
 
 def preprocess_text(sentence):
     """Handle some weird edge cases in parsing, like 'i' needing to be capitalized
@@ -565,8 +567,6 @@ def google_search(sentence):
             result = DUCKY_GOOGLE + "\n" + res['items'][0]['title'] + "\n" + "<" + res['items'][0]['link'] + ">"
         logger.info(result)
         return result
-    # else:
-    #     return None
 
 
 def reflect(fragment):
@@ -592,13 +592,19 @@ def question_builder(sentence, noun, pronoun):
                                    else match.groups()[0])])
 
 
-# check what kind of input and what kind of message should be returned
 def analyze_input(sentence):
+    """check what kind of input and what kind of message should be returned"""
     logger.info("analyze_input")
     cleaned_up_sentence = preprocess_text(sentence)
     textBlobSentence = TextBlob(cleaned_up_sentence)
 
     pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
+
+    if cleaned_up_sentence == "ducky, markov chain me":
+        previous_responses.append("markov chain")
+        previous_responses.popleft()
+        print(previous_responses)
+        return markov_poem()
 
     response = check_for_danger_words(textBlobSentence)
     if response:
@@ -637,7 +643,6 @@ def analyze_input(sentence):
 
     response = about_self(textBlobSentence, pronoun)
     print("In about self method")
-    print(response)
 
     if response:
         previous_responses.append("about ducky")
@@ -666,10 +671,6 @@ def analyze_input(sentence):
 
 def send_message(sentence, channel):
     response = analyze_input(sentence)
-    # print(response)
-    # print(channel)
-    # print(slack_client.api_call("api.test"))
-    # print(slack_client.api_call("auth.test"))
     slack_client.api_call(
             "chat.postMessage",
             channel=channel,

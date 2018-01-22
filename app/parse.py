@@ -394,6 +394,7 @@ cs_babble = [
 ]
 
 DUCKY_GOOGLE = "Ducky googled Stack Overflow for you! Maybe this will help?"
+DUCKY_MARKOV = "Ducky wrote you a poem!"
 
 def check_for_danger_words(sentence):
     sentence_split = sentence.split(' ')
@@ -610,7 +611,8 @@ def analyze_input(sentence):
         previous_responses.append("markov chain")
         previous_responses.popleft()
         print(previous_responses)
-        return markov_poem()
+        poem = markov_poem()
+        return DUCKY_MARKOV + "\n \n" + poem
 
     response = check_for_danger_words(textBlobSentence)
     if response:

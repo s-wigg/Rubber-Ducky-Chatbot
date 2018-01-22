@@ -26,6 +26,7 @@ I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virt
 ## Ducky Key Words
 * Using Ducky's name let's Ducky know you are asking them a question a personal question
 * Adding "google", "help", "documentation", or "show me" to your input will cause Ducky to return a link to a Stack Overflow answer
+* Writing 
 
 ### Documentation
 

@@ -70,7 +70,7 @@ END_RESPONSES = [
 
 UNCLEAR_RESPONSES = [
     "Quack quack?",
-    "Sorry, I'm not sure I understand. Can you explain to to me again?",
+    "Sorry, I'm not sure I understand. Can you explain it to me again?",
     "Hmm, that does sound frustrating",
     "I'm a little lost...",
     "Yea, I'm confused too.",
@@ -524,6 +524,7 @@ def preprocess_text(sentence):
     cleaned = []
     words = sentence.split(' ')
     for w in words:
+        w = w.downcase()
         if w == 'i':
             w = 'I'
         if w == "i'm":
@@ -600,7 +601,7 @@ def analyze_input(sentence):
 
     pronoun, noun, adjective, verb = find_parts_of_speech(textBlobSentence)
 
-    if cleaned_up_sentence == "ducky, markov chain me":
+    if cleaned_up_sentence == "ducky, markov chain me" or ("Shakespeare" in cleaned_up_sentence) or ("shakespeare" in cleaned_up_sentence):
         previous_responses.append("markov chain")
         previous_responses.popleft()
         print(previous_responses)

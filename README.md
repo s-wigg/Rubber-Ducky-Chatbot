@@ -48,5 +48,7 @@ The following tutorials were particularly helpful in the development of this pro
 * [Brobot by Liza Daly](https://apps.worldwritable.com/tutorials/chatbot/)
 * [Getting Started With the Slack API Using Python and Flask by Matt Makai](https://realpython.com/blog/python/getting-started-with-the-slack-api-using-python-and-flask/)
 * [Implementing the Famous ELIZA chatbot in Python by Evan Dempsey](https://www.smallsurething.com/implementing-the-famous-eliza-chatbot-in-python/)
+* [Markov Chains: The Imitation Game](http://www.cyber-omelette.com/2017/01/markov.html)
+* [ML Basics: Markov Models Write Fairy Tales](http://thagomizer.com/blog/2017/11/07/markov-models.html)
 
 This project is licensed under the [MIT License](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/LICENSE).

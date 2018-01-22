@@ -35,12 +35,15 @@ class Config(object):
         "slut",
         "titt",
         "tits",
+        "poop",
+        "pee"
         "wop",
         "whore",
         "chink",
         "fatass",
         "shemale",
         "shit",
+        "shithole",
         "nigga",
         "daygo",
         "dego",
@@ -74,7 +77,8 @@ class Config(object):
         "loser",
         "murder",
         "slaughter",
-        "kill"
+        "kill",
+        "asshole"
         ])
 
     DANGER_WORDS = set([

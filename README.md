@@ -8,7 +8,12 @@ Ducky is a domain specific Slack chatbot to help coders think through their codi
 ## Why do you need Ducky in your life?
 It's 2am and you've hit a roadblock in your code. What the Duck are you supposed to do? Rubber Ducky Slackbot to the rescue! Rubber Ducky can serve as a Rubber Duck for the purposes of thinking through your coding roadblocks. Rubber Ducky can ask you questions and provide links to relevant Stack Overflow questions based on your input. Rubber Ducky will help speed you to the epiphany you're looking for to solve your coding troubles!
 
-## Installation
+## Conversation Flow Diagram
+[Visualization of Ducky's Decision Making Process in Developing Responses to User Input](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/Conversation%20Flow%20Diagram.jpg)
+
+## Documentation
+
+### Installation
 
 1. Clone the repo
 2. [Create a bot user](https://my.slack.com/services/new/bot) if you don't have one yet, and copy the API Token
@@ -30,11 +35,6 @@ I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virt
 * Using Ducky's name let's Ducky know you are asking them a question a personal question.
 * Adding "google", "help", "documentation", or "show me" to your input will cause Ducky to return a link to a Stack Overflow answer.
 * Writing "Ducky, markov chain me" or including the word "Shakespeare" in user input will cause Ducky to generate a 100 word poem in the style of a Shakespeare Sonnet generated using a [Markov Chain](http://setosa.io/ev/markov-chains/).
-
-## Conversation Flow Diagram
-[Visualization of Ducky's Decision Making Process in Developing Responses to User Input](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/Conversation%20Flow%20Diagram.jpg)
-
-### Documentation
 
 ##### Slack Documentation
 

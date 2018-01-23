@@ -31,6 +31,9 @@ I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virt
 * Adding "google", "help", "documentation", or "show me" to your input will cause Ducky to return a link to a Stack Overflow answer.
 * Writing "Ducky, markov chain me" or including the word "Shakespeare" in user input will cause Ducky to generate a 100 word poem in the style of a Shakespeare Sonnet generated using a [Markov Chain](http://setosa.io/ev/markov-chains/).
 
+## Conversation Flow Diagram
+[Visualization of Ducky's Decision Making Process in Developing Responses to User Input](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/Conversation%20Flow%20Diagram.jpg)
+
 ### Documentation
 
 ##### Slack Documentation

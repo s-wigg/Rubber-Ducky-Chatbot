@@ -27,7 +27,7 @@ It's 2am and you've hit a roadblock in your code. What the Duck are you supposed
 10. If deploying on AWS, environment variables can be set through the Elastic Beanstalk console instead.
 11. `pip install -r requirements.txt`
 12. `flask run`
-13. Invite Ducky into the channel(s) you designated on the Slack Outgoing Webhooks page. Ducky will respond to any message in that channel, so it's recommended to create a separate channel for those
+13. Invite Ducky into the channel(s) you designated on the Slack Outgoing Webhooks page. Ducky will respond to any message in that channel, so it's recommended to create a separate channel for just you and Ducky to talk.
 
 I recommend using a [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) so that you are running in a clean environment.
 

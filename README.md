@@ -11,6 +11,9 @@ It's 2am and you've hit a roadblock in your code. What the Duck are you supposed
 ## Conversation Flow Diagram
 [Visualization of Ducky's Decision Making Process in Developing Responses to User Input](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/Conversation%20Flow%20Diagram.jpg)
 
+## FAQ
+
+
 ## Documentation
 
 ### Installation
@@ -22,8 +25,8 @@ It's 2am and you've hit a roadblock in your code. What the Duck are you supposed
 5. Once you're running ngrok in a terminal window, copy and paste the forwarding URL into the [Slack Outgoing Webhooks page](https://api.slack.com/custom-integrations/outgoing-webhooks) on the 'outgoing webhook integration' line.
 6. On the Slack Outgoing Webhooks page, scroll down to the Integration Settings section. Select “#general” (or whatever channel(s) you want to use Ducky in) as the channel to listen on. Copy your ngrok Forwarding URL plus “/slack” into the URL(s) text box. Copy the generated Token. Scroll down and press the “Save Settings” button. If deploying on AWS (for example Elastic Beanstalk) include that link (plus "/slack") instead or in addition.
 7. In the command line type: `export SLACK_OUTGOING_WEBHOOK_SECRET='your-copied-token'`
-8. Visit the Google APIs Console <https://console.developers.google.com/apis> to get an API key for your own application. In the command line type: `export GOOGLE_API_KEY='your-copied-token'`
-9. Google Custom Search ID from https://cse.google.com/cse. When set the custom search engine will be used instead of Google Web Search. In the command line type: `export CSE_ID='your-copied-token'`
+8. Visit the [Google APIs Console](https://console.developers.google.com/apis to get an API key for your own application. In the command line type: `export GOOGLE_API_KEY='your-copied-token'`
+9. Get a [Google Custom Search ID](https://cse.google.com/cse). When set the custom search engine will be used instead of Google Web Search. In the command line type: `export CSE_ID='your-copied-token'`
 10. If deploying on AWS, environment variables can be set through the Elastic Beanstalk console instead.
 11. `pip install -r requirements.txt`
 12. `flask run`

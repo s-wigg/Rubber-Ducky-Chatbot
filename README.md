@@ -9,10 +9,14 @@ Ducky is a domain specific Slack chatbot to help coders think through their codi
 It's 2am and you've hit a roadblock in your code. What the Duck are you supposed to do? Rubber Ducky Slackbot to the rescue! Rubber Ducky can serve as a Rubber Duck for the purposes of thinking through your coding roadblocks. Rubber Ducky can ask you questions and provide links to relevant Stack Overflow questions based on your input. Rubber Ducky will help speed you to the epiphany you're looking for to solve your coding troubles!
 
 ## Conversation Flow Diagram
-[Visualization of Ducky's Decision Making Process in Developing Responses to User Input](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/Conversation%20Flow%20Diagram.jpg)
+[Visualization of Ducky's Decision Making Process in Developing Responses to User Input](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/assets/Conversation%20Flow%20Diagram.jpg)
 
 ## FAQ
+[FAQ](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/FAQ.md)
 
+
+## Ducky Features
+[Screen shots and explanations of Ducky's features](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/Ducky_demo.md)
 
 ## Documentation
 

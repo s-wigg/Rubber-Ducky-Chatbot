@@ -9,7 +9,8 @@
 - Respond to questions about Ducky
 - Respond to a variety of coding related words
 - Provide encouragement if user input is sufficiently negative
-- Provide a consideration response 
+- Provide a considerate response if user shares serious personal issue
+- Gently reprimands/encourages less offensive language
 - Search Stack Overflow and return the top hit to the Slack channel
 - Create a unique 100 word Shakespearian style poem
-- Respond asking the
+- Respond asking for clarification/indicate Ducky doesn't understand

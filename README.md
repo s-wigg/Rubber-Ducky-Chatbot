@@ -5,7 +5,7 @@
 ## Who or What is Ducky?
 Ducky is a domain specific Slack chatbot to help coders think through their coding challenges, but Ducky also seeks to address common ethical issues with bots such as discouraging abuse and responding appropriately to serious personal comments.
 
-[![Say Hello to Ducky](assets/ducky general demo 2.gif)]
+[![Say Hello to Ducky](https://github.com/s-wigg/Rubber-Ducky-Chatbot/blob/master/assets/ducky%20general%20demo%202.gif)]
 
 ## Why do you need Ducky in your life?
 It's 2am and you've hit a roadblock in your code. What the Duck are you supposed to do? Rubber Ducky Slackbot to the rescue! Rubber Ducky can serve as a Rubber Duck for the purposes of thinking through your coding roadblocks. Rubber Ducky can ask you questions and provide links to relevant Stack Overflow questions based on your input. Rubber Ducky will help speed you to the epiphany you're looking for to solve your coding troubles!

@@ -24,4 +24,4 @@ It beyond the scope of this project to provide any meaningful support in this si
 
 2) Offensive user input.
 
-Unfortunately, bots are all too often subject to abuse. [Companies take a variety of approaches in response](https://qz.com/911681/we-tested-apples-siri-amazon-echos-alexa-microsofts-cortana-and-googles-google-home-to-see-which-personal-assistant-bots-stand-up-for-themselves-in-the-face-of-sexual-harassment/). I very intentionally did not want to Ducky to just ignore abuse. I settled on having Ducky either gently reprimand or attempt to more positively redirect the conversation.
+Unfortunately, bots are all too often subject to abuse. [Companies take a variety of approaches in response](https://qz.com/911681/we-tested-apples-siri-amazon-echos-alexa-microsofts-cortana-and-googles-google-home-to-see-which-personal-assistant-bots-stand-up-for-themselves-in-the-face-of-sexual-harassment/). I very intentionally did not want Ducky to just ignore abuse. I settled on having Ducky either gently reprimand or attempt to more positively redirect the conversation.

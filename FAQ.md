@@ -6,13 +6,13 @@ I wanted to play with some natural language processing tools and techniques and 
 
 ## What can Ducky do?
 
-Ducky specializes in largely domain specific conversation related to coding, computers, and software development. Ducky can generate responses based on coding key words and can also return search results based on user input from Stack Overflow. Ducky can generate unique 100-word Shakespearian-style poems. Ducky can offer encouragement to the user where user input is sufficiently negative. Ducky can respond to greetings and end of conversation phrases and a limited variety of general conversational phrases. The best way to figure out what Ducky can do is just chat to Ducky and meet Ducky for yourself!
+Ducky specializes in largely domain specific conversation related to coding, computers, and software development. Ducky can generate responses based on coding key words and can also return search results based on user input from Stack Overflow. Ducky can generate unique 100-word Shakespearian-style poems. Ducky can offer encouragement to the user where sentiment analysis determines user input is sufficiently negative. Ducky can respond to greetings and end of conversation phrases and a limited variety of general conversational phrases. The best way to figure out what Ducky can do is just chat to Ducky and meet Ducky for yourself!
 
 ## Why is Ducky a Duck?
 
 Making Ducky a Rubber Ducky fits with the coding specific domain of the Slackbot. According to the [Wikipedia entry on Rubber Duck debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging) "The name is a reference to a story in the book [The Pragmatic Programmer](https://pragprog.com/book/tpp/the-pragmatic-programmer) in which a programmer would carry around a rubber duck and debug their code by forcing themselves to explain it, line-by-line, to the duck."
 
-Additionally, making Ducky an inanimate object avoids the trends toward making bots that impersonate women or teenagers with the unfortunate implication that those kinds of people are easier to impersonate with a deeply imperfect bot because they are in some way not fully human.
+Additionally, making Ducky an inanimate object circumvents the trend toward making bots that impersonate women or teenagers. These decisions often carry the unfortunate implication that those kinds of people are easier to impersonate with a deeply imperfect bot because they are in some way not fully human.
 
 ## What ethical considerations did you have to take into account while making Ducky?
 

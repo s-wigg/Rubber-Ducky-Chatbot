@@ -45,6 +45,6 @@ uWSGI==2.0.15
 vcrpy==1.11.1
 wcwidth==0.1.7
 websocket-client==0.46.0
-Werkzeug==0.14.1
+Werkzeug==0.15.5
 wrapt==1.10.11
 yarl==1.0.0
